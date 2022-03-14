@@ -1,0 +1,15 @@
+body {
+    background-color: azure;
+}
+
+.contentBox {
+    background-color: burlywood;
+}
+
+td {
+    display:inline-block;
+    width:120px;
+    height:70px;
+    background-color:aquamarine;
+    border:black 1px solid;
+}
