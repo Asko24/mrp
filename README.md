@@ -54,7 +54,7 @@ Przykładowe przejście przez proces zostało zobrazowane na poniższych tabelac
 |**Czas realizacji = 2  Wielkość partii = 100  Poziom BOM = 1  Na stanie = 0**||||||
 ||||||||||||
 ||||||||||||
-|***MRP***|||||||||||
+||||||||||||
 
 
 |***Filary (założenie: wielkość partii 400)***||||||||||
