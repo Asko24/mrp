@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SI</title>
     <link rel="stylesheet" href="src/style.css">
+    <script src="src/form.js"></script>
     <script src="src/mrp.js"></script>
     <script src="src/input.js"></script>
     <script src="src/table.js"></script>
     <script src="src/block.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-        board = new mrp("main", ["placeholder"])
-        
+            board = new form()
+            const mrpForm  = document.getElementById('mrp');
+            mrpForm.addEventListener('submit', (event) => {
+                board = new mrp("main", ["placeholder"])
+            });
         });
-
     </script>
 </head>
 <body>

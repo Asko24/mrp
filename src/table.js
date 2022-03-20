@@ -25,6 +25,7 @@ class table{
             //this.content[this.schema[i]] = {}
             for (let j = 0; j<this.xSize; j++){
                 var cell = Element(row, "td")
+                cell.classList.add("mrpTable");
                 //console.log(this.schema.length)
                 if (i == 0){
                     cell.innerHTML = j

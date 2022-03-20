@@ -8,6 +8,8 @@ class mrp{
         var xCellSize = 80
         var yCellSize = 30
         //parentElement.innerHTML = "test"
+        var formContent = document.getElementById("form.contentBox")
+        formContent.remove()
         var contentBox = document.createElement("div")
         contentBox.id = title+".contentBox"
         contentBox.classList.add("contentBox")
