@@ -38,16 +38,16 @@ class table{
                 
                 
                 cell.id = this.name + "#" + j + "-" + i
-                this.content[j+"-"+i] = {"element":cell, "type":this.schema[i], "x" : j, "y" : i, "value": 0}
+                this.content[j+"-"+i] = {"element":cell, "type":this.schema[i], "id": j+"-"+i, "x" : j, "y" : i, "value": 5, "parent":this, "writeValue": function(value){console.log("ooo",this); this.value = value; this.element.innerHTML = value;console.log("ooo",this)}}
                 //this.content[cell.id] = {element:cell}
             }
         }
         // var row = Element(this.table, "tr")
         // var cell = Element(row, "td")
-        console.log(this.schema[this.schema.length-1])
+        // console.log(this.schema[this.schema.length-1])
         for(var key in this.schema[this.schema.length-1]) {
             var value = this.schema[this.schema.length-1][key]
-            console.log(key,value)
+            // console.log(key,value)
             this.description = Element(this.table, "div")
             this.description.classList.add("mrpDescription")
             this.description.innerHTML = key + ": " + value
@@ -61,6 +61,55 @@ class table{
         //cell.innerHTML = this.schema[this.ySize]
     }
 
+    accessValue(id){
+        return this.content[id].value
+        
+    }
+
+    writeValue(id, value){
+        this.content[id].value = value
+        this.content[id].element.innerHTML = value
+    }
+
+    nextX(id){
+        let coors = id.split("-")
+        this.verifyID(coors)
+        let ret = (parseInt(coors[0])+1).toString()+"-"+coors[1]
+        this.verifyID(ret.split("-"))
+        return ret
+    }
+    nextY(id){
+        let coors = id.split("-")
+        this.verifyID(coors)
+        let ret = coors[0] +"-"+ (parseInt(coors[1])+1).toString()
+        this.verifyID(ret.split("-"))
+        return ret
+    }
+
+    prevX(id){
+        let coors = id.split("-")
+        this.verifyID(coors)
+        let ret = (parseInt(coors[0])-1).toString()+"-"+coors[1]
+        this.verifyID(ret.split("-"))
+        return ret
+    }
+    prevY(id){
+        let coors = id.split("-")
+        this.verifyID(coors)
+        let ret = coors[0] +"-"+ (parseInt(coors[1])-1).toString()
+        this.verifyID(ret.split("-"))
+        return ret
+    }
+
+    verifyID(id){
+        if (parseInt(id[0])<0 || id[1]<0|| parseInt(id[0])>this.xSize-1 || parseInt(id[1])<0 || parseInt(id[1])>this.ySize-1 || id[0] == "" || id[1] == "" ||id[0] == "-" || id[1] == "-"){
+            console.log(id[0],"---", id[1])
+            throw 'Invalid ID; ID out of scope';
+        }else{
+            console.log("here dude: ", id[0],"---", id[1])
+            return 0
+        }
+    }
     
 }
 
