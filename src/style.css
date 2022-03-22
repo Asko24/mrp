@@ -11,18 +11,23 @@ html {
 body {
     height: 100%;
     margin: 0;
-	background-image: linear-gradient(45deg, #49a09d, #5f2c82);
+    background-image: linear-gradient(45deg, #49a09d, #537fd1);
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
 .contentBox {
-    position: absolute;
-	top: 0%;
-	left: 25%;
-    margin: 0;
-	font-family: sans-serif;
-	font-weight: 100;
+    margin: auto;
+	font-family: "Lucida Console";
+    padding: 10px;
+}
+/* titles */
+.title{
+    color: white;
+    font-size: 26px;
+    text-shadow: 3px 3px black;
+    font-weight: bold;
+    letter-spacing: 4px;
 }
 
 /* tables */
@@ -34,6 +39,8 @@ body {
     color: white;
     text-shadow: 2px 2px black;
     text-align: center;
+    font-size: 17px;
+    font-weight: bold;
 
     position: relative;
     overflow: hidden;
@@ -41,15 +48,19 @@ body {
 rgba(0,0,0,0.1);
     width: 800px;
     height:70px;
-    background-color: #55608f;
-    border:black 2px solid;
+    background-color: #3028a14f;
+    border:rgba(0, 0, 0, 0.548) 3px solid;
 }
 .mrpTable:hover {
-    background-color: rgba(255,255,255,0.3);
+    background-color: rgba(255, 255, 255, 0.116);
+}
+
+.table_header{
+    background-color: #221c747a; 
 }
 
 .mrpDescription{
-    color: white;
+    color: rgb(255, 255, 255);
     text-shadow: 2px 2px black;
     text-align: center;
 }

@@ -7,7 +7,9 @@ class table{
         this.schema = schema
         this.content = {}
         //this.parent.innerHTML = "test"
-        Element(parent,"p").innerText = name
+        this.title = Element(parent,"p")
+        this.title.innerText = name
+        this.title.classList.add("title")
         this.initTable()
         console.log(this)
 
@@ -29,6 +31,10 @@ class table{
                 //console.log(this.schema.length)
                 if (i == 0){
                     cell.innerHTML = j
+                    cell.classList.add("table_header")
+                }
+                if (j == 0){
+                    cell.classList.add("table_header")
                 }
                 if (this.schema.length >= i && j == 0){
                     cell.innerHTML = this.schema[i]
