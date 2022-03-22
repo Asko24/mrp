@@ -46,7 +46,7 @@ class form {
         var tr = document.createElement('tr')
         tr.innerHTML =
         `<td><label for="GHP.nr_tyg_`+this.popytId+`">Nr tygodnia: </label></td>
-         <td><input type="number" id="GHP.nr_tyg_`+this.popytId+`" name="GHP.nr_tyg_1" value="0"></td>
+         <td><input type="number" id="GHP.nr_tyg_`+this.popytId+`" name="GHP.nr_tyg_`+this.popytId+`" value="0"></td>
          <td><label for="GHP.ilosc_karmnikow_`+this.popytId+`">Ilość karmników: </label></td>
          <td><input type="number" id="GHP.ilosc_karmnikow_`+this.popytId+`" name="GHP.ilosc_karmnikow_`+this.popytId+`" value="0"></td>`
         table.appendChild(tr)

@@ -1,5 +1,5 @@
 class mrp{
-    constructor(parent, schema, title="default"){
+    constructor(parent, schema, title="default", demand, na_stanie, czas_realizacji, wlk_partii){
         this.parent = parent
         this.schema = schema
         var parentElement = document.getElementById(parent)
@@ -20,6 +20,10 @@ class mrp{
         this.testTable2 = new table(contentBox, xBlocks, 6, "Podstawa", this.Podstawa)
         this.testTable3 = new table(contentBox, xBlocks, 6, "Góra", this.Gora)
 
+        console.log("demand:", demand)
+        console.log("na_stanie: " + na_stanie)
+        console.log("czas_realizacji: " + czas_realizacji)
+        console.log("wlk_partii: " + wlk_partii)
         
     }
     GHP = [

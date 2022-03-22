@@ -14,10 +14,31 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             board = new form()
-            const mrpForm  = document.getElementById('mrp');
+            mrpForm  = document.getElementById('mrp');
             mrpForm.addEventListener('submit', (event) => {
-                board = new mrp("main", ["placeholder"])
+                board = new mrp(
+                    "main", 
+                    ["placeholder"],
+                    "default", 
+                    getDemand(mrpForm),
+                    document.getElementById("GHP.na_stanie").value,
+                    document.getElementById("GHP.czas_realizacji").value,
+                    document.getElementById("GHP.wlk_partii").value)
             });
+
+            function getDemand(mrpForm) {
+                var demand = {}
+                var i = 1
+                do {
+                    demand[document.getElementById("GHP.nr_tyg_"+i).value] = 
+                    document.getElementById("GHP.ilosc_karmnikow_"+i).value
+                    i++
+
+                 } while (document.getElementById("GHP.nr_tyg_"+i) 
+                 && document.getElementById("GHP.ilosc_karmnikow_"+i)
+                 && document.getElementById("GHP.nr_tyg_"+i).value != 0); 
+                return demand;
+            }
         });
     </script>
 </head>
