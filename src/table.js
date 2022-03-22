@@ -42,17 +42,21 @@ class table{
                 //this.content[cell.id] = {element:cell}
             }
         }
-        var row = Element(this.table, "tr")
-        var cell = Element(row, "td")
+        // var row = Element(this.table, "tr")
+        // var cell = Element(row, "td")
         console.log(this.schema[this.schema.length-1])
         for(var key in this.schema[this.schema.length-1]) {
             var value = this.schema[this.schema.length-1][key]
             console.log(key,value)
-            cell.innerHTML += key + ": " + value + "<br>"
+            this.description = Element(this.table, "div")
+            this.description.classList.add("mrpDescription")
+            this.description.innerHTML = key + ": " + value
+
+            //cell.innerHTML += key + ": " + value + "<br>"
         }
         console.log(this.content)
-        cell.style.height = "120px"
-        cell.style.width = "120px"
+        // cell.style.height = "120px"
+        // cell.style.width = "120px"
         //console.log(this.schema[this.size])
         //cell.innerHTML = this.schema[this.ySize]
     }
