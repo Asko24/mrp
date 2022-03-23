@@ -10,8 +10,13 @@ class mrp{
 
         this.parent = parent
         this.schema = schema
+        this.demand = demand
+        this.na_stanie = na_stanie
+        this.czas_realizacji = czas_realizacji
+        this.wlk_partii = wlk_partii
+
         var parentElement = document.getElementById(parent)
-        var xBlocks = 8
+        var xBlocks = this.getMaxWeek() + 1
         var yBlocks = 4
         var xCellSize = 80
         var yCellSize = 30
@@ -147,14 +152,25 @@ class mrp{
             return 0
         }
     }
+    getMaxWeek() {
+        var max = 0;
+        for(var week in this.demand) {
+            if(parseInt(week) > max) {
+                max = parseInt(week);
+            }
+        }
+        return max
+    }
+
     GHP = [
         "tydzień: ",
         "Przewidywany Popyt",
         "Produkcja",
         "Dostępne",
         {
-            "Czas Realizacji":1,
-            "Na Stanie":0
+            "Czas Realizacji": this.czas_realizacji,
+            "Wielkość partii" : this.wlk_partii,
+            "Na Stanie":this.na_stanie
         }
     ]
     
