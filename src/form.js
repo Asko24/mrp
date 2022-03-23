@@ -10,25 +10,25 @@ class form {
 
             contentBox.innerHTML = 
             `<form action="" method="get" id="mrp">
-                <h2 style="text-align:center;">Przewidywany popyt</h2>
+                <h2 class="form_h2">Przewidywany popyt</h2>
                 <table id="popyt" class="formTable center">
                 </table>
-                <h2 style="text-align:center;">Dane produkcyjne</h2>
+                <h2 class="form_h2">Dane produkcyjne</h2>
                 <table class="formTable center">
                     <tr>
-                        <td><label for="GHP.na_stanie">Na stanie: </label></td>
-                        <td><input type="number" id="GHP.na_stanie" name="GHP.na_stanie" value="0"></td>
+                        <td><label class="form_label" for="GHP.na_stanie">Na stanie: </label></td>
+                        <td><input class="form_input" type="number" id="GHP.na_stanie" name="GHP.na_stanie" value="0"></td>
                     </tr>
                     <tr>
-                        <td><label for="GHP.czas_realizacji">Czas realizacji: </label></td>
-                        <td><input type="number" id="GHP.czas_realizacji" name="GHP.czas_realizacji" value="0"></td>
+                        <td><label class="form_label" for="GHP.czas_realizacji">Czas realizacji: </label></td>
+                        <td><input class="form_input" type="number" id="GHP.czas_realizacji" name="GHP.czas_realizacji" value="0"></td>
                     </tr>
                     <tr>
-                        <td><label for="GHP.wlk_partii">Wielkość partii: </label></td>
-                        <td><input type="number" id="GHP.wlk_partii" name="GHP.wlk_partii" value="0"></td>
+                        <td><label class="form_label" for="GHP.wlk_partii">Wielkość partii: </label></td>
+                        <td><input class="form_input" type="number" id="GHP.wlk_partii" name="GHP.wlk_partii" value="0"></td>
                     </tr>      
                 </table>
-                <button type="submit">Pokaż tabele</button>
+                <button class="form_button center" type="submit">Pokaż tabele</button>
             </form>`;
 
             parentElement.appendChild(contentBox)
@@ -45,10 +45,10 @@ class form {
         var table = document.getElementById("popyt")
         var tr = document.createElement('tr')
         tr.innerHTML =
-        `<td><label for="GHP.nr_tyg_`+this.popytId+`">Nr tygodnia: </label></td>
-         <td><input type="number" id="GHP.nr_tyg_`+this.popytId+`" name="GHP.nr_tyg_`+this.popytId+`" value="0"></td>
-         <td><label for="GHP.ilosc_karmnikow_`+this.popytId+`">Ilość karmników: </label></td>
-         <td><input type="number" id="GHP.ilosc_karmnikow_`+this.popytId+`" name="GHP.ilosc_karmnikow_`+this.popytId+`" value="0"></td>`
+        `<td><label class="form_label" for="GHP.nr_tyg_`+this.popytId+`">Nr tygodnia: </label></td>
+         <td><input class="form_input" type="number" id="GHP.nr_tyg_`+this.popytId+`" name="GHP.nr_tyg_`+this.popytId+`" value="0"></td>
+         <td><label class="form_label" for="GHP.ilosc_karmnikow_`+this.popytId+`">Ilość karmników: </label></td>
+         <td><input class="form_input" type="number" id="GHP.ilosc_karmnikow_`+this.popytId+`" name="GHP.ilosc_karmnikow_`+this.popytId+`" value="0"></td>`
         table.appendChild(tr)
         document.getElementById("GHP.nr_tyg_"+ this.popytId).addEventListener("change", () => {
             this.firstChanged = true
