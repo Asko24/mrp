@@ -14,7 +14,7 @@ class mrp{
         this.na_stanie = na_stanie
         this.czas_realizacji = czas_realizacji
         this.wlk_partii = wlk_partii
-
+        this.updateGHP()
         var parentElement = document.getElementById(parent)
         var xBlocks = this.getMaxWeek() + 1
         var yBlocks = 4
@@ -32,6 +32,11 @@ class mrp{
         this.testTable = new table(contentBox, xBlocks, yBlocks, "GHP", this.GHP)
         this.testTable2 = new table(contentBox, xBlocks, 6, "Podstawa", this.Podstawa)
         this.testTable3 = new table(contentBox, xBlocks, 6, "Góra", this.Gora)
+        this.filar = new table(contentBox, xBlocks, 6, "Filar", this.Filar)
+        this.noga = new table(contentBox, xBlocks, 6, "Noga", this.Noga)
+        this.podloga = new table(contentBox, xBlocks, 6, "Podłoga", this.Podloga)
+        this.dach = new table(contentBox, xBlocks, 6, "Dach", this.Dach)
+        this.haczyk = new table(contentBox, xBlocks, 6, "Haczyk", this.Haczyk)
 
         console.log("demand:", demand)
         console.log("na_stanie: " + na_stanie)
@@ -39,49 +44,49 @@ class mrp{
         console.log("wlk_partii: " + wlk_partii)
 
         console.log(this.testTable.accessValue("0-0"))
-        this.testTable.writeValue("0-0", "LOL Xd")
-        this.testTable3.writeValue(this.testTable2.nextX("4-4"),"Dupa")
-        this.testTable2.writeValue("1-1", this.testTable2.nextX("6-0"))
-        this.testTable2.writeValue("1-2", this.testTable2.nextY("4-4"))
-        this.testTable2.writeValue("1-3", this.testTable2.prevX("4-4"))
-        this.testTable2.writeValue("1-4", this.testTable2.prevY("4-1"))
-        this.testTable3.writeValue(this.testTable2.nextX("5-5"),"Dupa")
-        this.currentCell = this.testTable2.content["1-1"]
-        this.write("test0")
-        console.log(this.currentCell)
-        this.anc()
-        this.write("test1")
-        console.log(this.currentCell)
+        //this.testTable.writeValue("0-0", "LOL Xd")
+        // this.testTable3.writeValue(this.testTable2.nextX("4-4"),"hello")
+        // this.testTable2.writeValue("1-1", this.testTable2.nextX("6-0"))
+        // this.testTable2.writeValue("1-2", this.testTable2.nextY("4-4"))
+        // this.testTable2.writeValue("1-3", this.testTable2.prevX("4-4"))
+        // this.testTable2.writeValue("1-4", this.testTable2.prevY("4-1"))
+        // this.testTable3.writeValue(this.testTable2.nextX("5-5"),"hello2")
+        // this.currentCell = this.testTable2.content["1-1"]
+        // this.write("test0")
+        // console.log(this.currentCell)
+        // this.anc()
+        // this.write("test1")
+        // console.log(this.currentCell)
         
-        this.anr()
-        this.write("test2")
-        console.log(this.currentCell)
+        // this.anr()
+        // this.write("test2")
+        // console.log(this.currentCell)
         
-        this.anr()
-        this.write("test3")
-        console.log(this.currentCell)
+        // this.anr()
+        // this.write("test3")
+        // console.log(this.currentCell)
         
-        this.apc()
-        this.write("test4")
-        console.log(this.currentCell)
+        // this.apc()
+        // this.write("test4")
+        // console.log(this.currentCell)
         
-        this.apr()
-        //this.anc()
-        this.write("test5")
-        console.log(this.currentCell)
-        console.log("LOLOLOL",this.cellOverflow)
-        this.apc()
-        this.write("test6")
-        console.log("OOOOOOO",this.cellOverflow)
-        console.log(this.currentCell)
-        this.apc()
-        this.write("test7")
-        console.log(this.currentCell)
+        // this.apr()
+        // //this.anc()
+        // this.write("test5")
+        // console.log(this.currentCell)
+        // console.log("LOLOLOL",this.cellOverflow)
+        // this.apc()
+        // this.write("test6")
+        // console.log("OOOOOOO",this.cellOverflow)
+        // console.log(this.currentCell)
+        // this.apc()
+        // this.write("test7")
+        // console.log(this.currentCell)
 
         
-        this.gc("4-4")
-        this.write("test_4-4")
-        console.log(this.currentCell)
+        // this.gc("4-4")
+        // this.write("test_4-4")
+        // console.log(this.currentCell)
         
         this.loop()
     }
@@ -89,16 +94,33 @@ class mrp{
     loop(){
         // console.log("hmmm ", this.loopIterator)
         this.loopIterator += 1
+        console.log("EEEEEEEEEEEE")
+        //this.testTable.writeValue("0-0", "LOL Xd")
+        for(var week in this.demand) {
+            console.log("ASKO: ", (week) + "-1")
+            console.log(week)
+            //var temp = "1-" + (week-1)
+            //var el = document.getElementById("IP#"+(week) + "-1")
+            //el.value = this.demand[week]
+            // this.testTable.content[(week) + "-1"]
+            //this.currentCell = this.testTable.content[(week) + "-1"]
+            //this.write(this.demand[week])
+            //console.log("OOOOOOOOOO",this.currentCell)
+            //this.currentCell.content.inputField.innerHTML = this.demand[week]
+            this.testTable.writeValue((week) + "-1", this.demand[week])
+            
+        }
 
-        if(this.loopIterator >50){
-            console.log("what")
-            this.loopControl = 0
-        }
-        if (!this.loopControl){
-            console.log("loopEnded", this.loopControl)
-        }else{
-            this.loop()
-        }
+        // this.currentCell = this.testTable2.content["1-"+this.]
+        // if(this.loopIterator >50){
+        //     console.log("what")
+        //     this.loopControl = 0
+        // }
+        // if (!this.loopControl){
+        //     console.log("loopEnded", this.loopControl)
+        // }else{
+        //     this.loop()
+        // }
     }
 
     anc(){
@@ -161,6 +183,19 @@ class mrp{
         }
         return max
     }
+    updateGHP(){
+        this.GHP = [
+            "tydzień: ",
+            "Przewidywany Popyt",
+            "Produkcja",
+            "Dostępne",
+            {
+                "Czas Realizacji": this.czas_realizacji,
+                "Wielkość partii" : this.wlk_partii,
+                "Na Stanie":this.na_stanie
+            }
+        ]
+    }
 
     GHP = [
         "tydzień: ",
@@ -203,6 +238,82 @@ class mrp{
             "Na stanie" : 0
         }
     ]
+
+    Filar = [
+        "Okres <br> Dane Produkcyjne",
+        "Całkowite zapotrzebowanie",
+        "Planowane przyjęcia",
+        "Zapotrzebowanie netto",
+        "Planowane zamówienia",
+        "Planowane przyjęcie zamówień",
+        {
+            "Czas realizacji" : 2,
+            "Wielkość partii" : 100,
+            "Poziom BOM" : 1,
+            "Na stanie" : 0
+        }
+    ]
+
+    Noga = [
+        "Okres <br> Dane Produkcyjne",
+        "Całkowite zapotrzebowanie",
+        "Planowane przyjęcia",
+        "Zapotrzebowanie netto",
+        "Planowane zamówienia",
+        "Planowane przyjęcie zamówień",
+        {
+            "Czas realizacji" : 2,
+            "Wielkość partii" : 100,
+            "Poziom BOM" : 1,
+            "Na stanie" : 0
+        }
+    ]
+
+    Podloga = [
+        "Okres <br> Dane Produkcyjne",
+        "Całkowite zapotrzebowanie",
+        "Planowane przyjęcia",
+        "Zapotrzebowanie netto",
+        "Planowane zamówienia",
+        "Planowane przyjęcie zamówień",
+        {
+            "Czas realizacji" : 2,
+            "Wielkość partii" : 100,
+            "Poziom BOM" : 1,
+            "Na stanie" : 0
+        }
+    ]
+
+    Dach = [
+        "Okres <br> Dane Produkcyjne",
+        "Całkowite zapotrzebowanie",
+        "Planowane przyjęcia",
+        "Zapotrzebowanie netto",
+        "Planowane zamówienia",
+        "Planowane przyjęcie zamówień",
+        {
+            "Czas realizacji" : 2,
+            "Wielkość partii" : 100,
+            "Poziom BOM" : 1,
+            "Na stanie" : 0
+        }
+    ]
+
+    Haczyk = [
+        "Okres <br> Dane Produkcyjne",
+        "Całkowite zapotrzebowanie",
+        "Planowane przyjęcia",
+        "Zapotrzebowanie netto",
+        "Planowane zamówienia",
+        "Planowane przyjęcie zamówień",
+        {
+            "Czas realizacji" : 2,
+            "Wielkość partii" : 100,
+            "Poziom BOM" : 1,
+            "Na stanie" : 0
+        }
+    ]
+
 
     Default = [
         "Okres <br> Dane Produkcyjne",

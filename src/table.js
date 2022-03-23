@@ -28,6 +28,13 @@ class table{
             for (let j = 0; j<this.xSize; j++){
                 var cell = Element(row, "td")
                 cell.classList.add("mrpTable");
+                //var inputField = document.createElement("div")
+                //console.log("AAAAAAAAAAAAAAAA",this.title)
+                // if(this.title.innerHTML == "GHP"){
+                //     inputField = document.createElement("input")
+                //     inputField.id = "IP"+ "#" + j + "-" + i
+                // }
+                // cell.appendChild(inputField)
                 //console.log(this.schema.length)
                 if (i == 0){
                     cell.innerHTML = j
@@ -40,11 +47,13 @@ class table{
                     cell.innerHTML = this.schema[i]
                     console.log(this.schema[i])
                 }
-
+                
                 
                 
                 cell.id = this.name + "#" + j + "-" + i
+                
                 this.content[j+"-"+i] = {"element":cell, "type":this.schema[i], "id": j+"-"+i, "x" : j, "y" : i, "value": 5, "parent":this, "writeValue": function(value){console.log("ooo",this); this.value = value; this.element.innerHTML = value;console.log("ooo",this)}}
+                
                 //this.content[cell.id] = {element:cell}
             }
         }
