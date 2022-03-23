@@ -100,14 +100,14 @@ class mrp{
             console.log("ASKO: ", (week) + "-1")
             console.log(week)
             //var temp = "1-" + (week-1)
-            //var el = document.getElementById("IP#"+(week) + "-1")
-            //el.value = this.demand[week]
+            var el = document.getElementById("IP#"+(week) + "-1")
+            el.value = this.demand[week]
             // this.testTable.content[(week) + "-1"]
             //this.currentCell = this.testTable.content[(week) + "-1"]
             //this.write(this.demand[week])
             //console.log("OOOOOOOOOO",this.currentCell)
             //this.currentCell.content.inputField.innerHTML = this.demand[week]
-            this.testTable.writeValue((week) + "-1", this.demand[week])
+            // this.testTable.writeValue((week) + "-1", this.demand[week])
             
         }
 
