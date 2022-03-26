@@ -17,6 +17,7 @@ class mrp{
         this.updateGHP()
         var parentElement = document.getElementById(parent)
         var xBlocks = this.getMaxWeek() + 1
+        this.xBlocks = xBlocks
         var yBlocks = 4
         var xCellSize = 80
         var yCellSize = 30
@@ -51,7 +52,7 @@ class mrp{
         // this.testTable2.writeValue("1-3", this.testTable2.prevX("4-4"))
         // this.testTable2.writeValue("1-4", this.testTable2.prevY("4-1"))
         // this.testTable3.writeValue(this.testTable2.nextX("5-5"),"hello2")
-        // this.currentCell = this.testTable2.content["1-1"]
+        this.currentCell = this.testTable.content["1-1"]
         // this.write("test0")
         // console.log(this.currentCell)
         // this.anc()
@@ -96,12 +97,19 @@ class mrp{
         this.loopIterator += 1
         console.log("EEEEEEEEEEEE")
         //this.testTable.writeValue("0-0", "LOL Xd")
+        console.log("TESTING VOVA:", this.demand)
+        console.log(this.currentCell)
+        this.updateAfter("1-1","0")
+        this.updateAfter("1-3",this.na_stanie)
+        //this.updateAfter("4-3","50") ///<--- fajna sprawa
         for(var week in this.demand) {
             console.log("ASKO: ", (week) + "-1")
             console.log(week)
             //var temp = "1-" + (week-1)
-            var el = document.getElementById("IP#"+(week) + "-1")
-            el.value = this.demand[week]
+            this.gc((week) + "-1")
+            this.write(this.demand[week])
+            //var el = document.getElementById("IP#"+(week) + "-1")
+            //el.value = this.demand[week]
             // this.testTable.content[(week) + "-1"]
             //this.currentCell = this.testTable.content[(week) + "-1"]
             //this.write(this.demand[week])
@@ -110,6 +118,8 @@ class mrp{
             // this.testTable.writeValue((week) + "-1", this.demand[week])
             
         }
+        //this.gc("1-1")
+        this.checkAfter("1-3","1")
 
         // this.currentCell = this.testTable2.content["1-"+this.]
         // if(this.loopIterator >50){
@@ -153,10 +163,18 @@ class mrp{
         
     } //Access Previous Row
     gc(id){
-        this.currentCell = parent.content[id]
-    }
+        //console.log("HMM",parent)
+        this.currentCell = this.currentCell.parent.content[id]
+    } //Get Cell
+    gcv(id){
+        console.log("get cell value :", id, this.currentCell.parent.content[id], this.currentCell.parent.content[id].value)
+        return this.currentCell.parent.content[id].value
+    } //Get Cell Value
     write(value){
         this.currentCell.writeValue(value)
+    }
+    read(){
+        return this.currentCell.value
     }
     verifyID(id){
         id = id.split("-")
@@ -170,9 +188,63 @@ class mrp{
             }
             return 0
         }else{
-            console.log("here dude: ", id[0],"+++", id[1])
+            //console.log("here dude: ", id[0],"+++", id[1])
             return 0
         }
+    }
+    updateAfter(id, value){
+        this.gc(id)
+        
+        console.log(this.currentCell)
+        for (var i = id.split("-")[0]; i<this.xBlocks; i++){
+            this.write(value)
+
+            console.log("superWriter",i)
+            if(i < this.xBlocks-1){
+                this.anc()
+            }
+        }
+    }
+    checkAfter(id,rowToCompare){
+        this.gc(id)
+        
+        console.log(this.currentCell)
+        
+        for (var i = id.split("-")[0]; i<this.xBlocks; i++){
+            // this.write(value)
+            console.log("superReader",this.read())
+            console.log("your I", i)
+            console.log(this.gcv(i+"-"+rowToCompare))
+            var demandValue = this.gcv(i+"-"+rowToCompare)
+            if(demandValue == 0){
+                console.log("nothing to do")
+            }else{
+                if (demandValue > this.read()){
+                    console.log("GO TO PRODUCTION, DEMAND ABOVE AVAILABLE")
+                    var currentID = this.currentCell.id
+                    this.apr()
+                    this.updateProduction(this.currentCell.id)
+                    this.gc(currentID)
+
+                }else{
+                    var subtracted = this.read() - demandValue
+                    var currentID = this.currentCell.id
+                    this.write(subtracted)
+                    this.updateAfter(currentID, subtracted)
+                    this.gc(currentID)
+                }
+            }
+            
+            if(i < this.xBlocks-1){
+                console.log("what happened here", i)
+                this.anc()
+            }
+        }
+    }
+    updateProduction(id){
+        this.gc(id)
+        console.log(this.getProductionSize())
+
     }
     getMaxWeek() {
         var max = 0;
@@ -182,6 +254,12 @@ class mrp{
             }
         }
         return max
+    }
+    getProductionSize(){
+        return  this.currentCell.parent.schema[4]["Wielkość partii"]
+    }
+    getProductionTime(){
+        return  this.currentCell.parent.schema[4]["Czas Realizacji"]
     }
     updateGHP(){
         this.GHP = [

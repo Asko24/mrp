@@ -17,15 +17,15 @@ class form {
                 <table class="formTable center">
                     <tr>
                         <td><label class="form_label" for="GHP.na_stanie">Na stanie: </label></td>
-                        <td><input class="form_input" type="number" id="GHP.na_stanie" name="GHP.na_stanie" value="0"></td>
+                        <td><input class="form_input" type="number" id="GHP.na_stanie" name="GHP.na_stanie" value="50"></td>
                     </tr>
                     <tr>
                         <td><label class="form_label" for="GHP.czas_realizacji">Czas realizacji: </label></td>
-                        <td><input class="form_input" type="number" id="GHP.czas_realizacji" name="GHP.czas_realizacji" value="0"></td>
+                        <td><input class="form_input" type="number" id="GHP.czas_realizacji" name="GHP.czas_realizacji" value="1"></td>
                     </tr>
                     <tr>
                         <td><label class="form_label" for="GHP.wlk_partii">Wielkość partii: </label></td>
-                        <td><input class="form_input" type="number" id="GHP.wlk_partii" name="GHP.wlk_partii" value="0"></td>
+                        <td><input class="form_input" type="number" id="GHP.wlk_partii" name="GHP.wlk_partii" value="100"></td>
                     </tr>      
                 </table>
                 <button class="form_button center" type="submit">Pokaż tabele</button>

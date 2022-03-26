@@ -57,11 +57,18 @@ class table{
                     "y" : i, 
                     "value": 5, 
                     "parent":this, 
+                    "inputField":inputField,
                     "writeValue": function(value){
                         console.log("ooo",this); 
-                        this.inputField.value = value; 
+                        console.log("XDXD2",this.inputField.type)
+                        if (this.inputField.type == "text"){
+                            this.inputField.value = value; 
+                        }else{
+                            this.element.innerHTML = value;
+                        }
                         this.value = value; 
-                        this.element.innerHTML = value;
+                        
+                        
                         console.log("ooo",this)}
                     }
                 
@@ -132,7 +139,7 @@ class table{
             console.log(id[0],"---", id[1])
             throw 'Invalid ID; ID out of scope';
         }else{
-            console.log("here dude: ", id[0],"---", id[1])
+            //console.log("here dude: ", id[0],"---", id[1])
             return 0
         }
     }
