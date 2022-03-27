@@ -29,7 +29,7 @@ class table{
                 var cell = Element(row, "td")
                 cell.classList.add("mrpTable");
                 var inputField = document.createElement("div")
-                console.log("AAAAAAAAAAAAAAAA",this.title)
+                //console.log("AAAAAAAAAAAAAAAA",this.title)
                 if(this.title.innerHTML == "GHP"){
                     inputField = document.createElement("input")
                     inputField.id = "IP"+ "#" + j + "-" + i

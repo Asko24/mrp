@@ -21,7 +21,7 @@ class form {
                     </tr>
                     <tr>
                         <td><label class="form_label" for="GHP.czas_realizacji">Czas realizacji: </label></td>
-                        <td><input class="form_input" type="number" id="GHP.czas_realizacji" name="GHP.czas_realizacji" value="1"></td>
+                        <td><input class="form_input" type="number" id="GHP.czas_realizacji" name="GHP.czas_realizacji" value="2"></td>
                     </tr>
                     <tr>
                         <td><label class="form_label" for="GHP.wlk_partii">Wielkość partii: </label></td>

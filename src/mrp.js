@@ -19,6 +19,8 @@ class mrp{
         var xBlocks = this.getMaxWeek() + 1
         this.xBlocks = xBlocks
         var yBlocks = 4
+        this.productionListCells = []
+        this.productionListAmount = []
         var xCellSize = 80
         var yCellSize = 30
         //parentElement.innerHTML = "test"
@@ -100,6 +102,8 @@ class mrp{
         console.log("TESTING VOVA:", this.demand)
         console.log(this.currentCell)
         this.updateAfter("1-1","0")
+        this.updateAfter("1-2","")
+        // this.updateAfter("1-1","")
         this.updateAfter("1-3",this.na_stanie)
         //this.updateAfter("4-3","50") ///<--- fajna sprawa
         for(var week in this.demand) {
@@ -167,14 +171,14 @@ class mrp{
         this.currentCell = this.currentCell.parent.content[id]
     } //Get Cell
     gcv(id){
-        console.log("get cell value :", id, this.currentCell.parent.content[id], this.currentCell.parent.content[id].value)
+        //console.log("get cell value :", id, this.currentCell.parent.content[id], this.currentCell.parent.content[id].value)
         return this.currentCell.parent.content[id].value
     } //Get Cell Value
     write(value){
         this.currentCell.writeValue(value)
     }
     read(){
-        return this.currentCell.value
+        return parseInt(this.currentCell.value)
     }
     verifyID(id){
         id = id.split("-")
@@ -197,6 +201,7 @@ class mrp{
         
         console.log(this.currentCell)
         for (var i = id.split("-")[0]; i<this.xBlocks; i++){
+            console.log(value)
             this.write(value)
 
             console.log("superWriter",i)
@@ -209,7 +214,10 @@ class mrp{
         this.gc(id)
         
         console.log(this.currentCell)
-        
+        // if (this.getProductionTime() == "1"){
+        //     console.log("simple production")
+
+        // }
         for (var i = id.split("-")[0]; i<this.xBlocks; i++){
             // this.write(value)
             console.log("superReader",this.read())
@@ -219,31 +227,64 @@ class mrp{
             if(demandValue == 0){
                 console.log("nothing to do")
             }else{
+                //var number = parseInt(this.read())
+                //console.log(demandValue > number)
                 if (demandValue > this.read()){
                     console.log("GO TO PRODUCTION, DEMAND ABOVE AVAILABLE")
                     var currentID = this.currentCell.id
+                    var inStock = this.read()
                     this.apr()
-                    this.updateProduction(this.currentCell.id)
+                    this.tagProduction(this.currentCell.id)
+                    //console.log("id tego typa", this.currentCell.id)
+                    //console.log("read - demand,", this.read(), demandValue)
+                    var subtracted = inStock - demandValue
+                    var productionIterations = 0
+                    while (productionIterations * this.getProductionSize() +subtracted < 0){
+                        productionIterations++
+                    }
+                    //this.updateProduction(this.currentCell.id)
+                    console.log("sub", subtracted)
+                    this.updateAfter(currentID, productionIterations * this.getProductionSize() +subtracted)
+                    console.log("need to produce " + this.currentCell.parent.title.innerText + " " + productionIterations + " times")
+                    this.productionListAmount.push(productionIterations)
+                    console.log(this.productionListAmount)
                     this.gc(currentID)
+                    
 
                 }else{
+
+                    console.log(demandValue, this.read())
+                    console.log("NOT PRODUCED")
                     var subtracted = this.read() - demandValue
                     var currentID = this.currentCell.id
+                    console.log(subtracted)
                     this.write(subtracted)
                     this.updateAfter(currentID, subtracted)
                     this.gc(currentID)
                 }
             }
             
+
+            
             if(i < this.xBlocks-1){
                 console.log("what happened here", i)
                 this.anc()
             }
         }
+        for (var o = this.productionListCells.length - 1; o>=0 ; o-- ){
+            console.log("Produkcja",o, this.productionListCells[o], this.productionListAmount[o])
+            this.slotProduction(this.productionListCells[o],this.productionListAmount[o])
+        }
     }
     updateProduction(id){
         this.gc(id)
+        //production will be always available if we go from left, but we should check forward if there's not anything in range
+        // create a list of anything in range of our production time (and of it's production time, and go from the latest element from the list) also check along the way
+
+        //?? ok different approach, we do first run where we just tag where production is going to be needed for sure then we go by that onto second run where we decide production
+        // <><><><><>
         console.log(this.getProductionSize())
+
 
     }
     getMaxWeek() {
@@ -260,6 +301,88 @@ class mrp{
     }
     getProductionTime(){
         return  this.currentCell.parent.schema[4]["Czas Realizacji"]
+    }
+    tagProduction(id){
+        this.productionListCells.push(id)
+        console.log(this.productionListCells)
+    }
+    slotProduction(id, iterations){
+        this.gc(id)
+        var productionSize = this.getProductionTime()
+        console.log("Entered Slot Production")
+        console.log(j)
+        for(var j = 0 ; j<iterations;j++){
+            console.log(j)
+            this.checkProduction()
+            // if(this.currentCell.value == ""){
+            //     for(var i = 0; i < productionSize ; i++){
+            //         console.log("ASKO2",productionSize)
+            //         this.write("X")
+            //         if(!(productionSize-1 == i)){
+            //             this.apc()
+            //         }
+                    
+            //         // console.log(i,"verifying production possible on cell: ", this.currentCell.id)
+            //         // console.log("nothing:",this.currentCell.value)
+        
+            //     }
+            //     this.write("S")
+            // }else if(this.currentCell.value == "X" || this.currentCell.value == "S"){
+            //     this.apc()
+            //     console.log("SXka")
+            //     //console.log("iterations: ", iterations)
+            //     //this.slotProduction(this.currentCell.id,iterations - 1)
+                
+            // }
+            //console.log("OVERFLOW",this.cellOverflow)
+            // }else if(this.currentCell.value == "S"){
+            //     for (var y = 0; y< productionSize; y++){
+            //         this.apc()
+            //     }
+            //     console.log("Ska",this.currentCell)
+            //     this.slotProduction(this.currentCell.id)
+            // } 
+        }
+        
+        
+        
+    }
+    checkProduction(){
+        var productionSize = this.getProductionTime()
+        if(this.currentCell.value == ""){
+            for(var i = 0; i < productionSize ; i++){
+                console.log("ASKO2",productionSize)
+                this.write("X")
+                if(!(productionSize-1 == i)){
+                    this.apc()
+                }
+                
+                // console.log(i,"verifying production possible on cell: ", this.currentCell.id)
+                // console.log("nothing:",this.currentCell.value)
+    
+            }
+            this.write("S")
+        }else if(this.currentCell.value == "X" || this.currentCell.value == "S"){
+            if(this.cellOverflow){
+                this.write("Produkcja poza zakresem czasowym")
+            }else{
+                this.apc()
+                this.checkProduction()
+            }
+            
+            console.log("SXka")
+            
+            //console.log("iterations: ", iterations)
+            //this.slotProduction(this.currentCell.id,iterations - 1)
+            
+        }
+        console.log("OVERFLOW",this.cellOverflow)
+        if(this.cellOverflow){
+            console.log("Produkcja nie mieści się w zakresie dostępnego okresu czasowego")
+            //alert("Produkcja nie mieści się w zakresie dostępnego okresu czasowego")
+        }
+        
+
     }
     updateGHP(){
         this.GHP = [
