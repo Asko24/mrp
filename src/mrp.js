@@ -308,6 +308,7 @@ class mrp{
     }
     slotProduction(id, iterations){
         this.gc(id)
+        this.apc()
         var productionSize = this.getProductionTime()
         console.log("Entered Slot Production")
         console.log(j)
