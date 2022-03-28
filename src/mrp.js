@@ -1,5 +1,5 @@
 class mrp{
-    constructor(parent, schema, title="default", demand, na_stanie, czas_realizacji, wlk_partii){
+    constructor(parent, schema, title="default", popyt, na_stanie, czas_realizacji, wlk_partii){
 
         this.loopControl = 1 //This value controls the loop
 
@@ -10,7 +10,7 @@ class mrp{
 
         this.parent = parent
         this.schema = schema
-        this.demand = demand
+        this.popyt = popyt
         this.na_stanie = na_stanie
         this.czas_realizacji = czas_realizacji
         this.wlk_partii = wlk_partii
@@ -32,21 +32,33 @@ class mrp{
         contentBox.style.width = "1280px"
         //contentBox.style.height = "1000px"
         parentElement.appendChild(contentBox)
-        this.testTable = new table(contentBox, xBlocks, yBlocks, "GHP", this.GHP)
-        this.testTable2 = new table(contentBox, xBlocks, 6, "Podstawa", this.Podstawa)
-        this.testTable3 = new table(contentBox, xBlocks, 6, "Góra", this.Gora)
-        this.filar = new table(contentBox, xBlocks, 6, "Filar", this.Filar)
-        this.noga = new table(contentBox, xBlocks, 6, "Noga", this.Noga)
-        this.podloga = new table(contentBox, xBlocks, 6, "Podłoga", this.Podloga)
-        this.dach = new table(contentBox, xBlocks, 6, "Dach", this.Dach)
-        this.haczyk = new table(contentBox, xBlocks, 6, "Haczyk", this.Haczyk)
+        this.GHPTable = new table(contentBox, xBlocks, yBlocks, "GHP", this.GHP)
+        this.PodstawaTable = new table(contentBox, xBlocks, 6, "Podstawa", this.Podstawa)
+        this.GoraTable = new table(contentBox, xBlocks, 6, "Góra", this.Gora)
+        this.FilarTable = new table(contentBox, xBlocks, 6, "Filar", this.Filar)
+        this.NogaTable = new table(contentBox, xBlocks, 6, "Noga", this.Noga)
+        this.PodlogaTable = new table(contentBox, xBlocks, 6, "Podłoga", this.Podloga)
+        this.DachTable = new table(contentBox, xBlocks, 6, "Dach", this.Dach)
+        this.HaczykTable = new table(contentBox, xBlocks, 6, "Haczyk", this.Haczyk)
 
-        console.log("demand:", demand)
+        this.tables = {
+            "GHP": this.GHPTable,
+            "Podstawa": this.PodstawaTable,
+            "Góra": this.GoraTable,
+            "Filar": this.FilarTable,
+            "Noga": this.NogaTable,
+            "Podłoga": this.PodlogaTable,
+            "Dach": this.DachTable,
+            "Haczyk": this.HaczykTable
+        }
+    
+
+        console.log("popyt:", popyt)
         console.log("na_stanie: " + na_stanie)
         console.log("czas_realizacji: " + czas_realizacji)
         console.log("wlk_partii: " + wlk_partii)
 
-        console.log(this.testTable.accessValue("0-0"))
+        console.log(this.GHPTable.accessValue("0-0"))
         //this.testTable.writeValue("0-0", "LOL Xd")
         // this.testTable3.writeValue(this.testTable2.nextX("4-4"),"hello")
         // this.testTable2.writeValue("1-1", this.testTable2.nextX("6-0"))
@@ -54,7 +66,7 @@ class mrp{
         // this.testTable2.writeValue("1-3", this.testTable2.prevX("4-4"))
         // this.testTable2.writeValue("1-4", this.testTable2.prevY("4-1"))
         // this.testTable3.writeValue(this.testTable2.nextX("5-5"),"hello2")
-        this.currentCell = this.testTable.content["1-1"]
+        this.currentCell = this.GHPTable.content["1-1"]
         // this.write("test0")
         // console.log(this.currentCell)
         // this.anc()
@@ -99,27 +111,27 @@ class mrp{
         this.loopIterator += 1
         console.log("EEEEEEEEEEEE")
         //this.testTable.writeValue("0-0", "LOL Xd")
-        console.log("TESTING VOVA:", this.demand)
+        console.log("TESTING VOVA:", this.popyt)
         console.log(this.currentCell)
         this.updateAfter("1-1","0")
         this.updateAfter("1-2","")
         // this.updateAfter("1-1","")
         this.updateAfter("1-3",this.na_stanie)
         //this.updateAfter("4-3","50") ///<--- fajna sprawa
-        for(var week in this.demand) {
+        for(var week in this.popyt) {
             console.log("ASKO: ", (week) + "-1")
             console.log(week)
             //var temp = "1-" + (week-1)
             this.gc((week) + "-1")
-            this.write(this.demand[week])
+            this.write(this.popyt[week])
             //var el = document.getElementById("IP#"+(week) + "-1")
-            //el.value = this.demand[week]
+            //el.value = this.popyt[week]
             // this.testTable.content[(week) + "-1"]
             //this.currentCell = this.testTable.content[(week) + "-1"]
-            //this.write(this.demand[week])
+            //this.write(this.popyt[week])
             //console.log("OOOOOOOOOO",this.currentCell)
-            //this.currentCell.content.inputField.innerHTML = this.demand[week]
-            // this.testTable.writeValue((week) + "-1", this.demand[week])
+            //this.currentCell.content.inputField.innerHTML = this.popyt[week]
+            // this.testTable.writeValue((week) + "-1", this.popyt[week])
             
         }
         //this.gc("1-1")
@@ -223,21 +235,21 @@ class mrp{
             console.log("superReader",this.read())
             console.log("your I", i)
             console.log(this.gcv(i+"-"+rowToCompare))
-            var demandValue = this.gcv(i+"-"+rowToCompare)
-            if(demandValue == 0){
+            var popytValue = this.gcv(i+"-"+rowToCompare)
+            if(popytValue == 0){
                 console.log("nothing to do")
             }else{
                 //var number = parseInt(this.read())
-                //console.log(demandValue > number)
-                if (demandValue > this.read()){
-                    console.log("GO TO PRODUCTION, DEMAND ABOVE AVAILABLE")
+                //console.log(popytValue > number)
+                if (popytValue > this.read()){
+                    console.log("GO TO PRODUCTION, popyt ABOVE AVAILABLE")
                     var currentID = this.currentCell.id
                     var inStock = this.read()
                     this.apr()
                     this.tagProduction(this.currentCell.id)
                     //console.log("id tego typa", this.currentCell.id)
-                    //console.log("read - demand,", this.read(), demandValue)
-                    var subtracted = inStock - demandValue
+                    //console.log("read - popyt,", this.read(), popytValue)
+                    var subtracted = inStock - popytValue
                     var productionIterations = 0
                     while (productionIterations * this.getProductionSize() +subtracted < 0){
                         productionIterations++
@@ -253,9 +265,9 @@ class mrp{
 
                 }else{
 
-                    console.log(demandValue, this.read())
+                    console.log(popytValue, this.read())
                     console.log("NOT PRODUCED")
-                    var subtracted = this.read() - demandValue
+                    var subtracted = this.read() - popytValue
                     var currentID = this.currentCell.id
                     console.log(subtracted)
                     this.write(subtracted)
@@ -289,7 +301,7 @@ class mrp{
     }
     getMaxWeek() {
         var max = 0;
-        for(var week in this.demand) {
+        for(var week in this.popyt) {
             if(parseInt(week) > max) {
                 max = parseInt(week);
             }
@@ -363,6 +375,14 @@ class mrp{
     
             }
             this.write("S")
+            this.updateProductionInTable("Podstawa", "GHP")
+            this.updateProductionInTable("Góra", "GHP")
+
+            var currentID = this.currentCell.id
+            console.log(currentID)
+            // podstawa[this.currentCell], góra[ten tydzień]
+
+
         }else if(this.currentCell.value == "X" || this.currentCell.value == "S"){
             if(this.cellOverflow){
                 this.write("Produkcja poza zakresem czasowym")
@@ -385,6 +405,42 @@ class mrp{
         
 
     }
+
+    updateProductionInTable(tableId, parentTableId){
+        var table = this.tables[tableId]
+        var productionDict = this.getProductionDict(parentTableId)
+        console.log("Produkcja "+ tableId +": ",productionDict)
+
+        Object.entries(table.content)
+            .filter(element => this.isItCellFromRow(element[0], 1))
+            .map(element => {
+                var elId = element[0]
+                var elValue = element[1]
+                var week = elId.split("-")[0]
+                if(productionDict[week] !== undefined) {
+                    elValue.value = productionDict[week]
+                    elValue.inputField.value = productionDict[week]
+                }
+                console.log(elId, "el:", elValue.value)
+            })
+    }
+
+    getProductionDict(tableId) {
+        var table = this.tables[tableId]
+        if (tableId == "GHP") { return this.getNotEmptyCellsFromRow(table, 2)
+        } else {return this.getNotEmptyCellsFromRow(table, 4)}
+    }
+
+    getNotEmptyCellsFromRow(table, rowId) {
+        var productionDict = {}
+        for(const [key, value] of Object.entries(table.content)) {
+            if(this.isItCellFromRow(key, rowId) && !this.isItCellFromCol(key, 0) && parseInt(value.value) != ""){
+                productionDict[key.split("-")[0].toString()] = value.value.toString()     
+            } 
+        }
+        return productionDict
+    }
+
     updateGHP(){
         this.GHP = [
             "tydzień: ",
@@ -397,6 +453,14 @@ class mrp{
                 "Na Stanie":this.na_stanie
             }
         ]
+    }
+
+    isItCellFromRow(key, rowId) {
+        return  key.split("-")[1] === rowId.toString()
+    }
+
+    isItCellFromCol(key, colId) {
+        return key.split("-")[0] === colId.toString()
     }
 
     GHP = [

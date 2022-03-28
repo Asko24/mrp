@@ -30,10 +30,10 @@ class table{
                 cell.classList.add("mrpTable");
                 var inputField = document.createElement("div")
                 //console.log("AAAAAAAAAAAAAAAA",this.title)
-                if(this.title.innerHTML == "GHP"){
-                    inputField = document.createElement("input")
-                    inputField.id = "IP"+ "#" + j + "-" + i
-                }
+                
+                inputField = document.createElement("input")
+                inputField.id = "IP"+ "#" + j + "-" + i
+                
                 cell.appendChild(inputField)
                 console.log(this.schema.length)
                 if (i == 0){
