@@ -40,9 +40,20 @@
                 return demand;
             }
         });
+        awareProduction = false
+        function flag(e){
+            console.log("flag changed")
+            awareProduction = !awareProduction
+            console.log(awareProduction)
+        }
     </script>
 </head>
 <body>
+    <div id="flags">
+        <p>flagi:</p>
+        <input type="checkbox" id="awareProduction" name="awareProduction" onclick="flag()">
+        <label for="awareProduction">Produkcja bez kolizji</label>
+    </div>
     <div id="main">
 
     </div>
