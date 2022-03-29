@@ -67,6 +67,20 @@ class mrp{
         // this.testTable2.writeValue("1-4", this.testTable2.prevY("4-1"))
         // this.testTable3.writeValue(this.testTable2.nextX("5-5"),"hello2")
         this.currentCell = this.GHPTable.content["1-1"]
+        console.log("",this.GHPTable)
+        var renderButton = addElement(this.GHPTable.table, "button")
+        renderButton.innerText = "Odśwież"
+        console.log("button",this)
+        var thisInstance = this
+        //renderButton.mrpOf = this
+        //renderButton.setAttribute("mrp", this)
+        renderButton.addEventListener("click", function(eventState, classInstance = thisInstance){
+            console.log("here")
+            console.log(this)
+            console.log(eventState)
+            console.log(classInstance)
+            classInstance.loop()
+        })
         // this.write("test0")
         // console.log(this.currentCell)
         // this.anc()
@@ -102,22 +116,8 @@ class mrp{
         // this.gc("4-4")
         // this.write("test_4-4")
         // console.log(this.currentCell)
-        
-        this.loop()
-    }
-
-    loop(){
-        // console.log("hmmm ", this.loopIterator)
-        this.loopIterator += 1
-        console.log("EEEEEEEEEEEE")
-        //this.testTable.writeValue("0-0", "LOL Xd")
-        console.log("TESTING VOVA:", this.popyt)
-        console.log(this.currentCell)
         this.updateAfter("1-1","0")
-        this.updateAfter("1-2","")
-        // this.updateAfter("1-1","")
         this.updateAfter("1-3",this.na_stanie)
-        //this.updateAfter("4-3","50") ///<--- fajna sprawa
         for(var week in this.popyt) {
             console.log("ASKO: ", (week) + "-1")
             console.log(week)
@@ -134,6 +134,23 @@ class mrp{
             // this.testTable.writeValue((week) + "-1", this.popyt[week])
             
         }
+        this.loop()
+    }
+
+    loop(){
+        // console.log("hmmm ", this.loopIterator)
+        this.loopIterator += 1
+        console.log("EEEEEEEEEEEE")
+        //this.testTable.writeValue("0-0", "LOL Xd")
+        console.log(this.currentCell)
+        this.productionListCells = []
+        this.productionListAmount = []
+        this.updateAfter("1-2","")
+        this.updateAfter("1-3",this.na_stanie)
+        // this.updateAfter("1-1","")
+        //this.updateAfter("1-3",this.na_stanie)
+        //this.updateAfter("4-3","50") ///<--- fajna sprawa
+        
         //this.gc("1-1")
         this.checkAfter("1-3","1")
 
@@ -361,12 +378,17 @@ class mrp{
         
     }
     checkProduction(){
+        console.log("land of rebase",this.currentCell.parent.prevX(this.currentCell.id))
+        console.log(this.gcv(this.currentCell.parent.prevX(this.currentCell.id)))
         var productionSize = this.getProductionTime()
         
         if(this.currentCell.value == ""){
             for(var i = 0; i < productionSize ; i++){
                 console.log("ASKO2",productionSize)
-                this.write("X")
+                if(awareProduction){
+                    this.write("X")
+                }
+                
                 if(!(productionSize-1 == i)){
                     this.apc()
                 }
@@ -396,7 +418,30 @@ class mrp{
             var currentID = this.currentCell.id
             console.log(currentID)
 
+
+        }else if(this.currentCell.value == "S" && this.gcv(this.currentCell.parent.prevX(this.currentCell.id)) == ""){
+            for(var i = 0; i < productionSize ; i++){
+                console.log("ASKO2",productionSize)
+                if(awareProduction){
+                    this.write("X")
+                }
+                
+                if(!(productionSize-1 == i)){
+                    this.apc()
+                }
+                
+                // console.log(i,"verifying production possible on cell: ", this.currentCell.id)
+                // console.log("nothing:",this.currentCell.value)
+    
+            }
+            this.write("S")
+            this.updateProductionInTable("Podstawa", "GHP")
+            this.updateProductionInTable("Góra", "GHP")
+
+            var currentID = this.currentCell.id
+            console.log(currentID)
         }else if(this.currentCell.value == "X" || this.currentCell.value > 0){
+          
             if(this.cellOverflow){
                 this.write("Produkcja poza zakresem czasowym")
             }else{
@@ -622,5 +667,15 @@ class mrp{
             "Na stanie" : 0
         }
     ]
+}
 
+function addElement(parent, type){
+    var element = document.createElement(type)
+    parent.appendChild(element)
+    return element
+}
+function addElementAfter(parent, type){
+    var element = document.createElement(type)
+    parent.append(element)
+    return element
 }

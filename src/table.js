@@ -12,7 +12,7 @@ class table{
         this.title.classList.add("title")
         this.initTable()
         console.log(this)
-
+        
     }
 
     // renderTable(){
@@ -21,6 +21,7 @@ class table{
     //}
 
     initTable(){
+        var hilariousState = this
         this.table = Element(this.parent,"table")
         for (let i = 0; i<this.ySize; i++){
             var row = Element(this.table, "tr")
@@ -72,6 +73,36 @@ class table{
                         
                         console.log("ooo",this)}
                     }
+                //var hilariousFetcher = j+"-"+i
+                this.content[j+"-"+i].inputField.addEventListener("input", function(eventState, hilarious = hilariousState){
+                    console.log(this)
+                    console.log(eventState)
+                    console.log(hilarious)
+                    console.log(this.value)
+                    //console.log(hilariousCell)
+                    console.log(this.id.split("#")[1])
+                    hilarious.content[this.id.split("#")[1]].writeValue(this.value)
+                    
+                    //console.log(awareProduction)
+                    
+                    //table.up
+                })
+                this.content[j+"-"+i].inputField.addEventListener("change", function(eventState, hilarious = hilariousState){
+                    console.log(this)
+                    console.log(eventState)
+                    console.log(hilarious)
+                    console.log(this.value)
+                    //console.log(hilariousCell)
+                    console.log(this.id.split("#")[1])
+                    if (this.value == ""){
+                        hilarious.content[this.id.split("#")[1]].writeValue("0")
+                    }
+                    
+                    
+                    
+                    //table.up
+                })
+                
                 
                 //this.content[cell.id] = {element:cell}
             }
