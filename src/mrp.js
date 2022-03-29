@@ -419,7 +419,7 @@ class mrp{
             console.log(currentID)
 
 
-        }else if(this.currentCell.value == "S" && this.gcv(this.currentCell.parent.prevX(this.currentCell.id)) == ""){
+        }else if(this.currentCell.value > 0 && this.gcv(this.currentCell.parent.prevX(this.currentCell.id)) == ""){
             for(var i = 0; i < productionSize ; i++){
                 console.log("ASKO2",productionSize)
                 if(awareProduction){
@@ -434,7 +434,8 @@ class mrp{
                 // console.log("nothing:",this.currentCell.value)
     
             }
-            this.write("S")
+            //this.write("S")
+            this.write(this.getProductionSize())
             this.updateProductionInTable("Podstawa", "GHP")
             this.updateProductionInTable("Góra", "GHP")
 
