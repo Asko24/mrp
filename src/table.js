@@ -55,7 +55,7 @@ class table{
                     "type":this.schema[i], 
                     "id": j+"-"+i, "x" : j, 
                     "y" : i, 
-                    "value": 5, 
+                    "value": 0, 
                     "parent":this, 
                     "inputField":inputField,
                     "writeValue": function(value){
