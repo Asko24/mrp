@@ -11,15 +11,25 @@ html {
 body {
     height: 100%;
     margin: 0;
-    background-image: linear-gradient(45deg, #49a09d, #537fd1);
+    background-image: linear-gradient(45deg, #0d2e21, #0d5c44);
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
 .contentBox {
     margin: auto;
-    font-family: "Lucida Console";
+    font-family: "Helvetica";
     padding: 10px;
+}
+
+#karmniczek_obrazek {
+    border: 7px solid #492c04e8;
+    width: 300px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px
 }
 
 /* form */
@@ -33,19 +43,23 @@ body {
 }
 
 .form_label {
-    font-size: 15px;
+    color: white;
+    font-size: 17px;
     letter-spacing: 2.5px;
-    text-shadow: 0.4px 0.4px black;
+    text-shadow: 1px 1px black;
 }
 
 .form_input {
     padding: 8px 12px;
     border: none;
     border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .form_button {
-    font-family: "Lucida Console";
+    font-family: "Helvetica";
     border: none;
     background-color: rgb(194, 194, 194);
     padding: 10px 16px;
@@ -82,32 +96,65 @@ body {
     border-spacing: 15px;
 }
 
+.input_table {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 12px;
+    width: 40%;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
 .mrpTable {
     color: white;
-    text-shadow: 2px 2px black;
+    text-shadow: 3px 3px black;
     text-align: center;
     font-size: 17px;
     font-weight: bold;
-
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 20px 
 rgba(0,0,0,0.1);
     width: 800px;
     height:70px;
-    background-color: #3028a14f;
+    background-color: #8d6021d3; 
     border:rgba(0, 0, 0, 0.548) 3px solid;
 }
 .mrpTable:hover {
-    background-color: rgba(255, 255, 255, 0.116);
+    background-color: #493110a2; 
 }
 
 .table_header{
-    background-color: #221c747a; 
+    background-color: #492c04e8; 
 }
 
 .mrpDescription{
     color: rgb(255, 255, 255);
-    text-shadow: 2px 2px black;
+    text-shadow: 3px 3px black;
+    text-align: left;
+    width: 100%;
+    padding-left: 5px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.mrpDescription_text{
+    color: rgb(255, 255, 255);
+    text-shadow: 3px 3px black;
+    text-align: left;
+    width: 100%;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.mrpDescription_input{
+    padding: 8px 12px;
+    border: none;
+    border-radius: 12px;
+    margin-left: 10px;
+    width: 70px;
+    font-size: 14px;
+    font-weight: bold;
     text-align: center;
 }

@@ -33,6 +33,7 @@ class table{
                 //console.log("AAAAAAAAAAAAAAAA",this.title)
                 
                 inputField = document.createElement("input")
+                inputField.classList.add("input_table")
                 inputField.id = "IP"+ "#" + j + "-" + i
                 
                 cell.appendChild(inputField)
@@ -56,7 +57,7 @@ class table{
                     "type":this.schema[i], 
                     "id": j+"-"+i, "x" : j, 
                     "y" : i, 
-                    "value": 5, 
+                    "value": 0, 
                     "parent":this, 
                     "inputField":inputField,
                     "writeValue": function(value){
@@ -112,9 +113,18 @@ class table{
         for(var key in this.schema[this.schema.length-1]) {
             var value = this.schema[this.schema.length-1][key]
             // console.log(key,value)
-            this.description = Element(this.table, "div")
+            this.description = Element(this.parent, "div")
+            var description_text = Element(this.description, "label")
+            description_text.setAttribute("type", "text")
+            description_text.innerHTML = key
+            description_text.classList.add("mrpDescription_text")
+            var description_input = Element(this.description, "input")
+            description_input.setAttribute("type", "number")
+            description_input.setAttribute("value", value)
+            // description_input.innerHTML = value
+            description_input.classList.add("mrpDescription_input")
             this.description.classList.add("mrpDescription")
-            this.description.innerHTML = key + ": " + value
+            //this.description.innerHTML = key + ": " + value
 
             //cell.innerHTML += key + ": " + value + "<br>"
         }

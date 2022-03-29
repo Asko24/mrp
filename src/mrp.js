@@ -381,6 +381,7 @@ class mrp{
         console.log("land of rebase",this.currentCell.parent.prevX(this.currentCell.id))
         console.log(this.gcv(this.currentCell.parent.prevX(this.currentCell.id)))
         var productionSize = this.getProductionTime()
+        
         if(this.currentCell.value == ""){
             for(var i = 0; i < productionSize ; i++){
                 console.log("ASKO2",productionSize)
@@ -396,13 +397,26 @@ class mrp{
                 // console.log("nothing:",this.currentCell.value)
     
             }
-            this.write("S")
+            this.write(this.getProductionBatch(this.currentCell.parent.name))
+            
+
+
+            // NIE WIEM GDZIE JEST NAJLEPSZE MIEJSCE NA TE FUNKCJE, NIE ZNAM DOKŁADNIE FLOW
+            // GDZIE WYWOŁUJESZ FUNKCJĘ ROZPOCZYNAJĄCĄ AKTUALIZACJĘ DANYCH DLA GHP?
+            // FUNKCJE PONIŻEJ POWINNY BYĆ PO METODZIE AKTUALIZUJĄCEJ GHP
+
+            // tu pobierane są wartości z wierszy dotyczących zamówienia "startu" produkcji rodzica
+            // i wstawiają te wartości do Całkowitego zapotrzebowania danej tabeli
             this.updateProductionInTable("Podstawa", "GHP")
             this.updateProductionInTable("Góra", "GHP")
+            this.updateProductionInTable("Filar", "Góra")
+            this.updateProductionInTable("Noga", "Podstawa")
+            this.updateProductionInTable("Podłoga", "Podstawa")
+            this.updateProductionInTable("Dach", "Góra")
+            this.updateProductionInTable("Haczyk", "Góra")
 
             var currentID = this.currentCell.id
             console.log(currentID)
-            // podstawa[this.currentCell], góra[ten tydzień]
 
 
         }else if(this.currentCell.value == "S" && this.gcv(this.currentCell.parent.prevX(this.currentCell.id)) == ""){
@@ -426,7 +440,8 @@ class mrp{
 
             var currentID = this.currentCell.id
             console.log(currentID)
-        }else if(this.currentCell.value == "X" || this.currentCell.value == "S"){
+        }else if(this.currentCell.value == "X" || this.currentCell.value > 0){
+          
             if(this.cellOverflow){
                 this.write("Produkcja poza zakresem czasowym")
             }else{
@@ -447,6 +462,20 @@ class mrp{
         }
         
 
+    }
+
+    getProductionBatch(tableName) {
+        var count = 0
+        switch(tableName) {
+            case "Filar": count = 4;
+                break;
+            case "Haczyk": count = 2;
+                break;
+            default: count = 1;
+        }
+        var table = this.tables[tableName]
+        var data =  tableName == "GHP" ? table.schema[4] : table.schema[6]
+        return data["Wielkość partii"] * count
     }
 
     updateProductionInTable(tableId, parentTableId){
@@ -477,7 +506,7 @@ class mrp{
     getNotEmptyCellsFromRow(table, rowId) {
         var productionDict = {}
         for(const [key, value] of Object.entries(table.content)) {
-            if(this.isItCellFromRow(key, rowId) && !this.isItCellFromCol(key, 0) && parseInt(value.value) != ""){
+            if(this.isItCellFromRow(key, rowId) && !this.isItCellFromCol(key, 0) && typeof value.value === "number"){
                 productionDict[key.split("-")[0].toString()] = value.value.toString()     
             } 
         }
@@ -486,7 +515,7 @@ class mrp{
 
     updateGHP(){
         this.GHP = [
-            "tydzień: ",
+            "Tydzień",
             "Przewidywany Popyt",
             "Produkcja",
             "Dostępne",
