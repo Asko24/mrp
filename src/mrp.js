@@ -470,7 +470,7 @@ class mrp{
 
     updateGHP(){
         this.GHP = [
-            "tydzień: ",
+            "Tydzień",
             "Przewidywany Popyt",
             "Produkcja",
             "Dostępne",
