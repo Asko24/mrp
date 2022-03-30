@@ -32,7 +32,7 @@ class mrp{
         contentBox.style.width = "1280px"
         //contentBox.style.height = "1000px"
         parentElement.appendChild(contentBox)
-        this.GHPTable = new table(contentBox, xBlocks, yBlocks, "GHP", this.GHP)
+        this.GHPTable = new table(contentBox, xBlocks, yBlocks, "GHP", this.GHP, this)
         this.PodstawaTable = new table(contentBox, xBlocks, 6, "Podstawa", this.Podstawa)
         this.GoraTable = new table(contentBox, xBlocks, 6, "Góra", this.Gora)
         this.FilarTable = new table(contentBox, xBlocks, 6, "Filar", this.Filar)
@@ -272,7 +272,7 @@ class mrp{
                         productionIterations++
                     }
                     //this.updateProduction(this.currentCell.id)
-                    console.log("sub", subtracted)
+                    console.log("sub", subtracted, this.getProductionSize())
                     this.updateAfter(currentID, productionIterations * this.getProductionSize() +subtracted)
                     console.log("need to produce " + this.currentCell.parent.title.innerText + " " + productionIterations + " times")
                     this.productionListAmount.push(productionIterations)
@@ -326,10 +326,14 @@ class mrp{
         return max
     }
     getProductionSize(){
-        return  this.currentCell.parent.schema[4]["Wielkość partii"]
+        //return  this.currentCell.parent.schema[4]["Wielkość partii"]
+        console.log(this.currentCell.parent.mrpElement.wlk_partii)
+        return parseInt(this.currentCell.parent.mrpElement.wlk_partii)
     }
     getProductionTime(){
-        return  this.currentCell.parent.schema[4]["Czas Realizacji"]
+        //return  this.currentCell.parent.schema[4]["Czas Realizacji"]
+        return parseInt(this.currentCell.parent.mrpElement.czas_realizacji)
+
     }
     tagProduction(id){
         this.productionListCells.push(id)

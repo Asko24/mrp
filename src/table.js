@@ -1,5 +1,5 @@
 class table{
-    constructor(parent, xSize, ySize, name = "default", schema = []){
+    constructor(parent, xSize, ySize, name = "default", schema = [], mrpElement){
         this.parent = parent
         this.xSize = xSize
         this.ySize = ySize
@@ -10,6 +10,7 @@ class table{
         this.title = Element(parent,"p")
         this.title.innerText = name
         this.title.classList.add("title")
+        this.mrpElement = mrpElement
         this.initTable()
         console.log(this)
         
@@ -81,7 +82,7 @@ class table{
                     console.log(this.value)
                     //console.log(hilariousCell)
                     console.log(this.id.split("#")[1])
-                    hilarious.content[this.id.split("#")[1]].writeValue(this.value)
+                    hilarious.content[this.id.split("#")[1]].writeValue(parseInt(this.value))
                     
                     //console.log(awareProduction)
                     
@@ -110,6 +111,12 @@ class table{
         // var row = Element(this.table, "tr")
         // var cell = Element(row, "td")
         // console.log(this.schema[this.schema.length-1])
+        var mapList = {
+            "Na Stanie": "na_stanie",
+            "Wielkość partii": "wlk_partii",
+            "Czas Realizacji": "czas_realizacji"
+        }
+        var mrpReference = this.mrpElement
         for(var key in this.schema[this.schema.length-1]) {
             var value = this.schema[this.schema.length-1][key]
             // console.log(key,value)
@@ -117,10 +124,18 @@ class table{
             var description_text = Element(this.description, "label")
             description_text.setAttribute("type", "text")
             description_text.innerHTML = key
+            let localKey = key
+            console.log("Vova i Karol testing local key: ", key, localKey)
             description_text.classList.add("mrpDescription_text")
             var description_input = Element(this.description, "input")
             description_input.setAttribute("type", "number")
             description_input.setAttribute("value", value)
+            description_input.addEventListener("input", function (event, reference = mrpReference, labelKey = localKey) {
+                var key = mapList[labelKey]
+                reference[key] = this.value
+                console.log(reference[key])
+                //console.log(reference[mapList[labelKey]])
+            })
             // description_input.innerHTML = value
             description_input.classList.add("mrpDescription_input")
             this.description.classList.add("mrpDescription")
@@ -192,4 +207,5 @@ function Element(parent, type){
     parent.appendChild(element)
     return element
 }
+
 
