@@ -62,17 +62,14 @@ class table{
                     "parent":this, 
                     "inputField":inputField,
                     "writeValue": function(value){
-                        console.log("ooo",this); 
-                        console.log("XDXD2",this.inputField.type)
+                        console.log("==========\nTo Cell: ",this, "write value type:",this.inputField.type); 
                         if (this.inputField.type == "text"){
                             this.inputField.value = value; 
                         }else{
                             this.element.innerHTML = value;
                         }
                         this.value = value; 
-                        
-                        
-                        console.log("ooo",this)}
+                        console.log("Updated cell:",this, "==========\n")}
                     }
                 //var hilariousFetcher = j+"-"+i
                 this.content[j+"-"+i].inputField.addEventListener("input", function(eventState, hilarious = hilariousState){
