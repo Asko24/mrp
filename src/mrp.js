@@ -415,13 +415,22 @@ class mrp{
         this.updateAfter(table.name, "1-4", "0")
         console.log("brkward", table.schema)
         this.gc(table.name, "1-3")
-        console.log("brkward", table.schema)
-        this.write(inStock - parseInt(this.gcv(table.name, "1-1")))
+        if (this.gcv(table.name, "1-2") == "" || this.gcv(table.name, "1-2") == "0" || this.gcv(table.name, "1-2") == 0 ) {
+            this.write(inStock - parseInt(this.gcv(table.name, "1-1")))
+        } else {
+            this.write(inStock + parseInt(this.gcv(table.name, "1-2")) - parseInt(this.gcv(table.name, "1-1")))
+        }
+
         for (var i = 2; i<this.xBlocks; i++){
+
             this.gc(table.name,  i+"-3")
             var demand = parseInt(this.gcv(table.name, i+"-1"))
             var previousCellValue = parseInt(this.gcv(table.name, (i-1)+"-3"))
+            
             var inStock = previousCellValue - demand
+            if (this.gcv(table.name, i+"-2") !== "" && this.gcv(table.name, i+"-2") !== "0" && this.gcv(table.name, i+"-2") !== 0 ) {
+                inStock += parseInt(this.gcv(table.name, i+"-2"))
+            }
             if(inStock < 0) {
                 this.updateNetDemand(table.name, this.currentCell.id.split("-")[0], inStock)
             } else {
