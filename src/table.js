@@ -32,10 +32,11 @@ class table{
                 cell.classList.add("mrpTable");
                 var inputField = document.createElement("div")
                 //console.log("AAAAAAAAAAAAAAAA",this.title)
-                
+                var mrpReference = this.mrpElement
                 inputField = document.createElement("input")
                 inputField.classList.add("input_table")
                 inputField.id = "IP"+ "#" + j + "-" + i
+                console.log("crdwark", i)
                 
                 cell.appendChild(inputField)
                 console.log(this.schema.length)
@@ -100,6 +101,13 @@ class table{
                     
                     //table.up
                 })
+                if (i == 2){
+                    inputField.addEventListener("input", function(ev, reference = mrpReference){
+                        console.log("drdwark")
+                        reference.loop()
+                    })
+                    
+                }
                 
                 
                 //this.content[cell.id] = {element:cell}
