@@ -433,7 +433,8 @@ class mrp{
     }
 
     updateAvailabilityInTable(table) {
-        var inStock = table.schema[7]["Na stanie"]
+        this.updateAfter(table.name, "1-3", "0")
+        let inStock = table.schema[7]["Na stanie"]
         this.updateAfter(table.name, "1-4", "0")
         console.log("brkward", table.schema)
         this.gc(table.name, "1-3")
@@ -449,14 +450,15 @@ class mrp{
             var demand = parseInt(this.gcv(table.name, i+"-1"))
             var previousCellValue = parseInt(this.gcv(table.name, (i-1)+"-3"))
             
-            var inStock = previousCellValue - demand
+            let inStock = previousCellValue - demand
             if (this.gcv(table.name, i+"-2") !== "" && this.gcv(table.name, i+"-2") !== "0" && this.gcv(table.name, i+"-2") !== 0 ) {
                 inStock += parseInt(this.gcv(table.name, i+"-2"))
             }
+            console.log("erdwark", inStock)
             if(inStock < 0) {
                 this.updateNetDemand(table.name, this.currentCell.id.split("-")[0], inStock)
             } else {
-                this.write(previousCellValue - demand)
+                this.write(inStock)
             }
             
             if(i < this.xBlocks-1){
