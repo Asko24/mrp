@@ -12,7 +12,6 @@ class table{
         this.title.classList.add("title")
         this.mrpElement = mrpElement
         this.initTable()
-        console.log(this)
         
     }
 
@@ -49,7 +48,6 @@ class table{
                 }
                 if (this.schema.length >= i && j == 0){
                     cell.innerHTML = this.schema[i]
-                    console.log(this.schema[i])
                 }
                 
                 cell.id = this.name + "#" + j + "-" + i
@@ -74,26 +72,20 @@ class table{
                     }
                 //var hilariousFetcher = j+"-"+i
                 this.content[j+"-"+i].inputField.addEventListener("input", function(eventState, hilarious = hilariousState){
-                    console.log(this)
-                    console.log(eventState)
-                    console.log(hilarious)
-                    console.log(this.value)
-                    //console.log(hilariousCell)
-                    console.log(this.id.split("#")[1])
-                    hilarious.content[this.id.split("#")[1]].writeValue(parseInt(this.value))
+                    
+                    if (this.value == "" || this.value == "-" || this.value == " "){
+                        console.log("pass")
+                    }else{
+                        hilarious.content[this.id.split("#")[1]].writeValue(parseInt(this.value))
+                    }
+                    
                     
                     //console.log(awareProduction)
                     
                     //table.up
                 })
                 this.content[j+"-"+i].inputField.addEventListener("change", function(eventState, hilarious = hilariousState){
-                    console.log(this)
-                    console.log(eventState)
-                    console.log(hilarious)
-                    console.log(this.value)
-                    //console.log(hilariousCell)
-                    console.log(this.id.split("#")[1])
-                    if (this.value == ""){
+                    if (this.value == "" || this.value == "-" || this.value == " "){
                         hilarious.content[this.id.split("#")[1]].writeValue("0")
                     }
                     
@@ -104,6 +96,7 @@ class table{
                 if (i == 2){
                     inputField.addEventListener("input", function(ev, reference = mrpReference){
                         console.log("drdwark")
+                        reference.loop()
                         reference.loop()
                     })
                     
@@ -162,10 +155,8 @@ class table{
 
             //cell.innerHTML += key + ": " + value + "<br>"
         }
-        console.log(this.content)
         // cell.style.height = "120px"
         // cell.style.width = "120px"
-        //console.log(this.schema[this.size])
         //cell.innerHTML = this.schema[this.ySize]
     }
 
@@ -211,7 +202,6 @@ class table{
 
     verifyID(id){
         if (parseInt(id[0])<0 || id[1]<0|| parseInt(id[0])>this.xSize-1 || parseInt(id[1])<0 || parseInt(id[1])>this.ySize-1 || id[0] == "" || id[1] == "" ||id[0] == "-" || id[1] == "-"){
-            console.log(id[0],"---", id[1])
             throw 'Invalid ID; ID out of scope';
         }else{
             //console.log("here dude: ", id[0],"---", id[1])
