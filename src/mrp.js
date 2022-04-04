@@ -407,9 +407,31 @@ class mrp{
         this.updateAvailabilityInTable(table)
         this.updateProductionInTable(tableName, parentTableName)
         this.planOrders(tableName)
-
-    }
+        this.updateOrderRecieve(tableName, table)
+    }  
     
+    updateOrderRecieve(tableName, table){
+        var productionTime = this.getProductionTime(tableName)
+        console.log("Production Time for ", tableName, ": ", productionTime)
+        this.gc(table.name, '1-5')
+        var orders = []
+        for (var i=1; i<this.xBlocks-1; i++){
+            var value = parseInt(this.currentCell.value)
+            console.log("updateOrderRecieve cell: ", value, typeof value)
+            if (value != 0) {
+                orders.push([i, value])
+            }
+            this.anc();
+        }
+        for (var i = 0; i<orders.length; i++){
+            this.gc(table.name, orders[i][0]+"-6")
+            for (var j = 0; j < productionTime; j++){
+                this.anc();
+            }
+            this.write(orders[i][1])
+        }
+    }
+
     updateAvailabilityInTable(table) {
         var inStock = table.schema[7]["Na stanie"]
         this.updateAfter(table.name, "1-4", "0")
@@ -496,7 +518,7 @@ class mrp{
     }
 
     planOrders(tableName){
-        this.updateAfter(tableName, "1-5", "0")
+        // this.updateAfter(tableName, "1-5", "0")
         this.checkAfter2(tableName, "1-4","1", "5")
         
     }
