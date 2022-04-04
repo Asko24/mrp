@@ -1,5 +1,5 @@
 class mrp{
-    constructor(parent, schema, title="default", popyt, na_stanie, czas_realizacji, wlk_partii){
+    constructor(parent, schema, title="default", popyt, na_stanie, czas_realizacji){
 
         this.loopControl = 1 //This value controls the loop
 
@@ -13,7 +13,6 @@ class mrp{
         this.popyt = popyt
         this.na_stanie = na_stanie
         this.czas_realizacji = czas_realizacji
-        this.wlk_partii = wlk_partii
         this.updateGHP()
         var parentElement = document.getElementById(parent)
         var xBlocks = this.getMaxWeek() + 1
@@ -56,7 +55,6 @@ class mrp{
         console.log("popyt:", popyt)
         console.log("na_stanie: " + na_stanie)
         console.log("czas_realizacji: " + czas_realizacji)
-        console.log("wlk_partii: " + wlk_partii)
 
         this.currentCell = this.GHPTable.content["1-1"]
         console.log("",this.GHPTable)
@@ -214,7 +212,7 @@ class mrp{
                     var inStock = this.read()
                     console.log("currentCell: ", this.currentCell.id)
                     this.gc(tableName, i+"-2")
-                    this.tagProduction(this.currentCell.id, this.getProductionSize(tableName))
+                    // this.tagProduction(this.currentCell.id, this.getProductionSize(tableName))
 
 
                     console.log("currentCell: ", this.currentCell)
@@ -226,11 +224,10 @@ class mrp{
                     //     productionIterations++
                     // }
                     //this.updateProduction(this.currentCell.id)
-                    console.log("sub", subtracted, this.getProductionSize(tableName))
 
                     // this.updateAfter(tableName, currentID, productionIterations * this.getProductionSize(tableName) +subtracted)
                     this.gc(tableName,  i+"-3")
-                    this.updateAfter(tableName, this.currentCell.id, this.getProductionSize(tableName) + subtracted)
+                    //this.updateAfter(tableName, this.currentCell.id, this.getProductionSize(tableName) + subtracted)
                     
                 }else{
                     console.log(popytValue, this.read())
@@ -566,7 +563,6 @@ class mrp{
             "Dostępne",
             {
                 "Czas realizacji": this.czas_realizacji,
-                "Wielkość partii" : this.wlk_partii,
                 "Na Stanie":this.na_stanie
             }
         ]
@@ -587,7 +583,6 @@ class mrp{
         "Dostępne",
         {
             "Czas realizacji": this.czas_realizacji,
-            "Wielkość partii" : this.wlk_partii,
             "Na stanie":this.na_stanie
         }
     ]
