@@ -109,7 +109,7 @@ class table{
         // var cell = Element(row, "td")
         // console.log(this.schema[this.schema.length-1])
         var mapList = {
-            "Na Stanie": "na_stanie",
+            "Na stanie": "na_stanie",
             "Wielkość partii": "wlk_partii",
             "Czas Realizacji": "czas_realizacji"
         }
@@ -128,8 +128,12 @@ class table{
             description_input.setAttribute("type", "number")
             description_input.setAttribute("value", value)
             description_input.addEventListener("input", function (event, reference = mrpReference, labelKey = localKey) {
+                console.log(reference)
+                
                 var key = mapList[labelKey]
+                console.log(key)
                 reference[key] = this.value
+                
                 console.log(reference[key])
                 //console.log(reference[mapList[labelKey]])
             })

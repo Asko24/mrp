@@ -1,0 +1,23 @@
+0. formularz wpisuje w tygodnie liczbę popytu na te tygodnie,
+wpisuje początkowe na stanie
+wpisuje czas realizacji
+
+klika pokaż tabele
+
+1. dostaje tabele
+w ghp nie ma wpisanej produkcji, on ma ją wpisać
+może zmodyfikować na stanie, ale na cały wiersz
+klika odśwież, na podstawie wypełnionej produkcji i początkowego stanu, liczy mu dostępne =>2
+2. automatycznie wypełniają się tabele poniżej (plus tutaj są wartości zmienne które można sobie zmienić ale pobierze je przed odpaleniem obliczeń (czas realizacji komponentu, wielkość partii, na stanie(początkowe)) plus może sobie wpisać planowane przyjęcia, na co reagujemy w przewidywane na stanie).
+
+do zrobienia, update dostępne na podstawie na stanie, cały wiersz
+do zrobienia branie pod uwagę produkcji,
+pytanie, czy początkowo mamy planować produkcję czy nie przyjmujemy, że nie wpisujemy produkcji.
+do zrobienia, reset row (opcjonalne)
+do zrobienia update z inputów pod tablkami podstawa,góra itd itp
+
+PYTANIA, 
+zapytać się, co jak braknie w dostępne (na minusie, co wtedy)
+zapytać się, co z produkcją planista itd itp (to raczej pewnie nie będzie) -
+
+

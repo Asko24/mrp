@@ -33,13 +33,13 @@ class mrp{
         //contentBox.style.height = "1000px"
         parentElement.appendChild(contentBox)
         this.GHPTable = new table(contentBox, xBlocks, yBlocks, "GHP", this.GHP, this)
-        this.PodstawaTable = new table(contentBox, xBlocks, 7, "Podstawa", this.Podstawa)
-        this.GoraTable = new table(contentBox, xBlocks, 7, "Góra", this.Gora)
-        this.FilarTable = new table(contentBox, xBlocks, 7, "Filar", this.Filar)
-        this.NogaTable = new table(contentBox, xBlocks, 7, "Noga", this.Noga)
-        this.PodlogaTable = new table(contentBox, xBlocks, 7, "Podłoga", this.Podloga)
-        this.DachTable = new table(contentBox, xBlocks, 7, "Dach", this.Dach)
-        this.HaczykTable = new table(contentBox, xBlocks, 7, "Haczyk", this.Haczyk)
+        this.PodstawaTable = new table(contentBox, xBlocks, 7, "Podstawa", this.Podstawa, this)
+        this.GoraTable = new table(contentBox, xBlocks, 7, "Góra", this.Gora, this)
+        this.FilarTable = new table(contentBox, xBlocks, 7, "Filar", this.Filar, this)
+        this.NogaTable = new table(contentBox, xBlocks, 7, "Noga", this.Noga, this)
+        this.PodlogaTable = new table(contentBox, xBlocks, 7, "Podłoga", this.Podloga, this)
+        this.DachTable = new table(contentBox, xBlocks, 7, "Dach", this.Dach, this)
+        this.HaczykTable = new table(contentBox, xBlocks, 7, "Haczyk", this.Haczyk, this)
 
         this.tables = {
             "GHP": this.GHPTable,
@@ -83,6 +83,22 @@ class mrp{
 
         this.loop()
 
+        // this.calcultateMRP("Podstawa", "GHP")
+        // this.calcultateMRP("Góra", "GHP")
+        // this.calcultateMRP("Filar", "Góra")
+        // this.calcultateMRP("Noga", "Podstawa")
+        // this.calcultateMRP("Podłoga", "Podstawa")
+        // this.calcultateMRP("Dach", "Góra")
+        // this.calcultateMRP("Haczyk", "Góra")
+    }
+
+    loop(){
+        //this.loopIterator += 1
+
+        //this.updateAfter("GHP", "1-2","")
+        this.updateAfter("GHP", "1-3",this.na_stanie)
+
+        this.checkAfter("GHP", "1-3","1")
         this.calcultateMRP("Podstawa", "GHP")
         this.calcultateMRP("Góra", "GHP")
         this.calcultateMRP("Filar", "Góra")
@@ -90,16 +106,6 @@ class mrp{
         this.calcultateMRP("Podłoga", "Podstawa")
         this.calcultateMRP("Dach", "Góra")
         this.calcultateMRP("Haczyk", "Góra")
-    }
-
-    loop(){
-        //this.loopIterator += 1
-
-        this.updateAfter("GHP", "1-2","")
-        //this.updateAfter("GHP", "1-3",this.na_stanie)
-
-        this.checkAfter("GHP", "1-3","1")
-
         // this.currentCell = this.testTable2.content["1-"+this.]
         // if(this.loopIterator >50){
         //     console.log("what")
@@ -581,7 +587,7 @@ class mrp{
         {
             "Czas realizacji": this.czas_realizacji,
             "Wielkość partii" : this.wlk_partii,
-            "Na Stanie":this.na_stanie
+            "Na stanie":this.na_stanie
         }
     ]
     
