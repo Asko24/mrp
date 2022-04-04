@@ -11,7 +11,7 @@ html {
 body {
     height: 100%;
     margin: 0;
-    background-image: linear-gradient(45deg, #0d2e21, #0d5c44);
+    background-image: linear-gradient(45deg, #307c26, #298146c2, #307c26);
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -108,7 +108,7 @@ body {
 
 .mrpTable {
     color: white;
-    text-shadow: 3px 3px black;
+    text-shadow: 1.5px 1.5px black;
     text-align: center;
     font-size: 17px;
     font-weight: bold;
@@ -118,20 +118,20 @@ body {
 rgba(0,0,0,0.1);
     width: 800px;
     height:70px;
-    background-color: #8d6021d3; 
+    background-color: #9e8460d3; 
     border:rgba(0, 0, 0, 0.548) 3px solid;
 }
 .mrpTable:hover {
-    background-color: #493110a2; 
+    background-color: #855e29a2; 
 }
 
 .table_header{
-    background-color: #492c04e8; 
+    background-color: #5c4627e8; 
 }
 
 .mrpDescription{
     color: rgb(255, 255, 255);
-    text-shadow: 3px 3px black;
+    text-shadow: 1.5px 1.5px black;
     text-align: left;
     width: 100%;
     padding-left: 5px;
@@ -141,7 +141,7 @@ rgba(0,0,0,0.1);
 
 .mrpDescription_text{
     color: rgb(255, 255, 255);
-    text-shadow: 3px 3px black;
+    text-shadow: 1.5px 1.5px black;
     text-align: left;
     width: 100%;
     font-size: 17px;
