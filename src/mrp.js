@@ -416,8 +416,9 @@ class mrp{
     updateAvailabilityInTable(table) {
         var inStock = table.schema[7]["Na stanie"]
         this.updateAfter(table.name, "1-4", "0")
-        
+        console.log("brkward", table.schema)
         this.gc(table.name, "1-3")
+        console.log("brkward", table.schema)
         this.write(inStock - parseInt(this.gcv(table.name, "1-1")))
         for (var i = 2; i<this.xBlocks; i++){
             this.gc(table.name,  i+"-3")

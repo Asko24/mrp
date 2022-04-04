@@ -125,16 +125,25 @@ class table{
             console.log("Vova i Karol testing local key: ", key, localKey)
             description_text.classList.add("mrpDescription_text")
             var description_input = Element(this.description, "input")
+            var uuname = this.name
             description_input.setAttribute("type", "number")
             description_input.setAttribute("value", value)
-            description_input.addEventListener("input", function (event, reference = mrpReference, labelKey = localKey) {
+            description_input.addEventListener("input", function (event, reference = mrpReference, labelKey = localKey, uname = uuname) {
                 console.log(reference)
                 
                 var key = mapList[labelKey]
                 console.log(key)
-                reference[key] = this.value
                 
-                console.log(reference[key])
+                if (uname == "GHP"){
+                    reference[key] = parseInt(this.value)
+                    reference[uname][4][labelKey] = parseInt(this.value)
+                }else{
+                    //reference[key] = this.value
+                    reference[uname][7][labelKey] = parseInt(this.value)
+                }
+                
+                console.log("ardwark",reference[key])
+                //console.log("ardwark",reference[uname][7][key])
                 reference.loop()
                 //console.log(reference[mapList[labelKey]])
             })
