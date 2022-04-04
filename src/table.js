@@ -135,6 +135,7 @@ class table{
                 reference[key] = this.value
                 
                 console.log(reference[key])
+                reference.loop()
                 //console.log(reference[mapList[labelKey]])
             })
             // description_input.innerHTML = value
