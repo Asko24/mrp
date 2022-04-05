@@ -93,10 +93,9 @@ class table{
                     
                     //table.up
                 })
-                if (i == 2){
+                if (i == 2 || i == 1){
                     inputField.addEventListener("input", function(ev, reference = mrpReference){
                         console.log("drdwark")
-                        reference.loop()
                         reference.loop()
                     })
                     

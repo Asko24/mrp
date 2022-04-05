@@ -4,7 +4,6 @@ class mrp{
         this.loopControl = 1 //This value controls the loop
 
         this.loopIterator = 0 //this value shows how many loop functions have happened
-
         this.rowOverflow = 0
         this.cellOverflow = 0
 
@@ -51,23 +50,23 @@ class mrp{
         }
     
 
-        console.log("popyt:", popyt)
-        console.log("na_stanie: " + na_stanie)
-        console.log("czas_realizacji: " + czas_realizacji)
+        // console.log("popyt:", popyt)
+        // console.log("na_stanie: " + na_stanie)
+        // console.log("czas_realizacji: " + czas_realizacji)
 
         this.currentCell = this.GHPTable.content["1-1"]
-        console.log("",this.GHPTable)
+        // console.log("",this.GHPTable)
         var renderButton = addElement(this.GHPTable.table, "button")
         renderButton.innerText = "Odśwież"
-        console.log("button",this)
+        // console.log("button",this)
         var thisInstance = this
         //renderButton.mrpOf = this
         //renderButton.setAttribute("mrp", this)
         renderButton.addEventListener("click", function(eventState, classInstance = thisInstance){
-            console.log("here")
-            console.log(this)
-            console.log(eventState)
-            console.log(classInstance)
+            // console.log("here")
+            // console.log(this)
+            // console.log(eventState)
+            // console.log(classInstance)
             classInstance.loop()
         })
         
@@ -91,10 +90,8 @@ class mrp{
 
     loop(){
         //this.loopIterator += 1
-
         //this.updateAfter("GHP", "1-2","")
         this.updateAvailabilityInGHP()
-
         this.checkAfter("GHP", "1-3","1")
         this.calcultateMRP("Podstawa", "GHP")
         this.calcultateMRP("Góra", "GHP")
@@ -112,6 +109,9 @@ class mrp{
         //     console.log("loopEnded", this.loopControl)
         // }else{
         //     this.loop()
+        // }
+        // if(this.cellOverflow){
+        //     alert("Produkcja nie mieści się w zakresie dostępnego okresu czasowego")
         // }
     }
 
@@ -328,8 +328,6 @@ class mrp{
             // } 
         }
         
-        
-        
     }
     checkProduction(){
         console.log("land of rebase",this.currentCell.parent.prevX(this.currentCell.id))
@@ -395,89 +393,79 @@ class mrp{
                 this.checkProduction()
             }
             
-            console.log("SXka")
+            // console.log("SXka")
             
             //console.log("iterations: ", iterations)
             //this.slotProduction(this.currentCell.id,iterations - 1)
             
         }
-        console.log("OVERFLOW",this.cellOverflow)
-        if(this.cellOverflow){
-            console.log("Produkcja nie mieści się w zakresie dostępnego okresu czasowego")
-            //alert("Produkcja nie mieści się w zakresie dostępnego okresu czasowego")
-        }
+        // console.log("OVERFLOW",this.cellOverflow)
         
 
     }
 
     calcultateMRP(tableName, parentTableName){
         var table = this.tables[tableName]
-        this.updateAvailabilityInTable(table)
         this.updateProductionInTable(tableName, parentTableName)
+        this.updateAvailabilityInTable(table)
+        this.updateNetDemand(table, "1")
         this.planOrders(tableName)
         this.updateOrderRecieve(tableName, table)
     }  
     
+    updateNetDemand(table, week) {
+        this.updateAfter(table.name, week+"-4", "0")
+        
+        for (var i = 1; i<this.xBlocks; i++){
+            var inStock = this.gcv(table.name, i+"-3")
+            if( inStock < 0) {
+                this.gc(table.name, i+"-4")
+                this.write(inStock * (-1))
+                }
+        }
+    }
+
     updateOrderRecieve(tableName, table){
         var productionTime = this.getProductionTime(tableName)
-        console.log("Production Time for ", tableName, ": ", productionTime)
-        this.gc(table.name, '1-5')
-        var orders = []
+        // console.log("Production Time for ", tableName, ": ", productionTime)
+
         for (var i=1; i<this.xBlocks-1; i++){
+            this.gc(table.name, i+'-5')
             var value = parseInt(this.currentCell.value)
-            console.log("updateOrderRecieve cell: ", value, typeof value)
             if (value != 0) {
-                orders.push([i, value])
+                this.gc(table.name, i + productionTime +"-6")
+                this.write(value)
+                this.updateNetDemand(table, i + productionTime + 1)
+
             }
-            this.anc();
-        }
-        for (var i = 0; i<orders.length; i++){
-            this.gc(table.name, orders[i][0]+"-6")
-            for (var j = 0; j < productionTime; j++){
-                this.anc();
-            }
-            this.write(orders[i][1])
         }
     }
 
     updateAvailabilityInTable(table) {
         this.updateAfter(table.name, "1-3", "0")
-        let inStock = table.schema[7]["Na stanie"]
         this.updateAfter(table.name, "1-4", "0")
-        console.log("brkward", table.schema)
+        
+        var inStock = table.schema[7]["Na stanie"]
+
+        // console.log("brkward", table.schema)
         this.gc(table.name, "1-3")
         if (this.gcv(table.name, "1-2") == "" || this.gcv(table.name, "1-2") == "0" || this.gcv(table.name, "1-2") == 0 ) {
             this.write(inStock - parseInt(this.gcv(table.name, "1-1")))
         } else {
             this.write(inStock + parseInt(this.gcv(table.name, "1-2")) - parseInt(this.gcv(table.name, "1-1")))
         }
-
         for (var i = 2; i<this.xBlocks; i++){
-
             this.gc(table.name,  i+"-3")
             var demand = parseInt(this.gcv(table.name, i+"-1"))
             var previousCellValue = parseInt(this.gcv(table.name, (i-1)+"-3"))
             
-            let inStock = previousCellValue - demand
             if (this.gcv(table.name, i+"-2") !== "" && this.gcv(table.name, i+"-2") !== "0" && this.gcv(table.name, i+"-2") !== 0 ) {
-                inStock += parseInt(this.gcv(table.name, i+"-2"))
-            }
-            console.log("erdwark", inStock)
-            if(inStock < 0) {
-                this.updateNetDemand(table.name, this.currentCell.id.split("-")[0], inStock)
+                this.write(previousCellValue - demand + parseInt(this.gcv(table.name, i+"-2")))
             } else {
-                this.write(inStock)
+                this.write(previousCellValue - demand)
             }
             
-            if(i < this.xBlocks-1){
-                this.anc()
-            }
         }
-    }
-
-    updateNetDemand(tableName, col, value){
-        var current = this.gc(tableName, col + "-4")
-        this.write(value * (-1))
     }
 
     getProductionBatch(tableName) {
@@ -510,7 +498,7 @@ class mrp{
         var productionTime = this.getProductionTime(parentTableId)
         // if(tableName != "GHP")  this.planOrders(tableName)
         var productionDict = this.getProductionDict(productionTime, parentTableId)
-         console.log("Produkcja "+ tableName +": ",productionDict)
+        //  console.log("Produkcja "+ tableName +": ",productionDict)
          
         Object.entries(table.content)
             .filter(element => this.isItCellFromRow(element[0], 1))
@@ -523,7 +511,7 @@ class mrp{
                     elValue.value = productionDict[week] * count
                     elValue.inputField.value = productionDict[week] * count
                 }
-                console.log(elId, "el:", elValue.value)
+                // console.log(elId, "el:", elValue.value)
             })
     }
 
@@ -535,45 +523,52 @@ class mrp{
     }
 
     checkAfter2(tableName, id, demandRow, productionRow){
-        console.log("Filling production row for "+tableName)
+        // console.log("Filling production row for "+tableName)
 
         var week =  id.split("-")[0]
         for (var i = week; i<this.xBlocks; i++){
             this.gc(tableName, i+"-3")
-            console.log("----------------\nCurrentCell: "+ this.currentCell.id)
-            console.log("InStock: ",this.read())
+            // console.log("----------------\nCurrentCell: "+ this.currentCell.id)
+            // console.log("InStock: ",this.read())
             console.log("To compare cellId:", i+"-"+demandRow, "value: ", this.gcv(tableName, i+"-"+demandRow))
             var popytValue = this.gcv(tableName, i+"-"+demandRow)
 
             if(popytValue == 0){
-                console.log("nothing to do")
+                // console.log("nothing to do")
             }else{
-
+                let subtracted = 0 
                 if (popytValue > this.read()){
-                    console.log("GO TO PRODUCTION, popyt ABOVE AVAILABLE")
+                    // console.log("GO TO PRODUCTION, popyt ABOVE AVAILABLE")
                     var inStock = this.read()
+                    console.log("instock", inStock)
                     var productionWeek = i - this.getProductionTime(tableName)
-                    console.log("currentCell: ", this.currentCell.id)
-                    this.gc(tableName, productionWeek+"-"+ productionRow)
-                    try{
-                        this.tagProduction(this.currentCell.id, this.getProductionSize(tableName))
-                    }catch (e) {
-                        window.alert("Przy podanych parametrach produkcja na czas jest niemożliwa.");
-                    }
-                    
-                    console.log("currentCell: ", this.currentCell)
-                    console.log("read - popyt,", this.read(), popytValue)
-                    var subtracted = inStock - popytValue
 
-                    console.log("sub", subtracted, this.getProductionSize(tableName))
+                    // if (productionWeek < 1) this.cellOverflow = 1;
+                    console.log("production week",productionWeek)
+                    if (productionWeek < 1) {
+                        // console.log("TAG PRODUCTION SHOULD NOT WORK!!!!!")
+                        console.log("before prodweek<1",subtracted, popytValue, inStock)
+                        
+                        subtracted = inStock
+                        console.log("after prodweek<1",subtracted)
+                    } else {
+                        this.gc(tableName, productionWeek+"-"+ productionRow)
+                        this.tagProduction(this.currentCell.id, this.getProductionSize(tableName))
+                        // console.log("currentCell: ", this.currentCell)
+                        // console.log("read - popyt,", this.read(), popytValue)
+                        console.log("before else",subtracted)
+                        subtracted = this.getProductionSize(tableName) + inStock
+                        console.log("after else",subtracted)
+                    }
+                    // console.log("sub", subtracted, this.getProductionSize(tableName))
                     this.gc(tableName,  i+"-3")
-                    this.updateAfter(tableName, this.currentCell.id, this.getProductionSize(tableName) + subtracted)
+                    this.updateAfter(tableName, this.currentCell.id, subtracted)
                     
                 }else{
-                    console.log(popytValue, this.read())
-                    console.log("NOT PRODUCED")
-                    var subtracted = this.read() - popytValue
-                    console.log(subtracted)
+                    // console.log(popytValue, this.read())
+                    // console.log("NOT PRODUCED")
+                    subtracted = this.read() - popytValue
+                    // console.log(subtracted)
                     this.write(subtracted)
                     this.updateAfter(tableName, this.currentCell.id, subtracted)
                     this.gc(tableName, this.currentCell.id)
@@ -592,7 +587,7 @@ class mrp{
         var productionDict = {}
         for(const [key, value] of Object.entries(table.content)) {
             if(this.isItCellFromRow(key, rowId) && !this.isItCellFromCol(key, 0) && parseInt(value.value) > 0){
-                console.log(productionTime)
+                // console.log(productionTime)
                 var properWeek = parseInt(key.split("-")[0]) - productionTime
                 productionDict[properWeek] = value.value.toString()     
             } 
