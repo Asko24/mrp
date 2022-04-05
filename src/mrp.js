@@ -28,7 +28,6 @@ class mrp{
         var contentBox = document.createElement("div")
         contentBox.id = title+".contentBox"
         contentBox.classList.add("contentBox")
-        contentBox.style.width = "1280px"
         //contentBox.style.height = "1000px"
         parentElement.appendChild(contentBox)
         this.GHPTable = new table(contentBox, xBlocks, yBlocks, "GHP", this.GHP, this)

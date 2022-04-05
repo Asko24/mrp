@@ -6,7 +6,6 @@ class form {
             var contentBox = document.createElement('div')
             contentBox.id = this.title + ".contentBox"
             contentBox.classList.add("contentBox")
-            contentBox.style.width = "1280px"
 
             contentBox.innerHTML = 
             `<form action="" method="get" id="mrp">
