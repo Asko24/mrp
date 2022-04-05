@@ -596,7 +596,7 @@ class mrp{
             "Dostępne",
             {
                 "Czas realizacji": this.czas_realizacji,
-                "Na Stanie":this.na_stanie
+                "Na stanie":this.na_stanie
             }
         ]
     }
