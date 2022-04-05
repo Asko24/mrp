@@ -94,7 +94,7 @@ class mrp{
         //this.loopIterator += 1
 
         //this.updateAfter("GHP", "1-2","")
-        this.updateAfter("GHP", "1-3",this.na_stanie)
+        this.updateAvailabilityInGHP()
 
         this.checkAfter("GHP", "1-3","1")
         this.calcultateMRP("Podstawa", "GHP")
@@ -114,6 +114,16 @@ class mrp{
         // }else{
         //     this.loop()
         // }
+    }
+
+    updateAvailabilityInGHP() {
+        this.updateAfter("GHP", "1-3",this.na_stanie)
+        for (var i = 1; i<this.xBlocks; i++){
+            this.gc("GHP", i + "-3")
+            var previousCellValue = parseInt(this.gcv("GHP", (i-1)+"-3"))
+            if(i==1) previousCellValue = this.read()
+            this.write(previousCellValue-this.gcv("GHP", i+"-1")+this.gcv("GHP", i+"-2"))
+        }
     }
 
     anc(){
@@ -193,7 +203,6 @@ class mrp{
 
     checkAfter(tableName, id, demandRow){
         console.log("Filling production row using production_size from form,\n")
-
         var week =  id.split("-")[0]
         for (var i = week; i<this.xBlocks; i++){
             this.gc(tableName, i+"-3")
@@ -546,9 +555,12 @@ class mrp{
                     var productionWeek = i - this.getProductionTime(tableName)
                     console.log("currentCell: ", this.currentCell.id)
                     this.gc(tableName, productionWeek+"-"+ productionRow)
-                    this.tagProduction(this.currentCell.id, this.getProductionSize(tableName))
-
-
+                    try{
+                        this.tagProduction(this.currentCell.id, this.getProductionSize(tableName))
+                    }catch (e) {
+                        window.alert("Przy podanych parametrach produkcja na czas jest niemożliwa.");
+                    }
+                    
                     console.log("currentCell: ", this.currentCell)
                     console.log("read - popyt,", this.read(), popytValue)
                     var subtracted = inStock - popytValue
