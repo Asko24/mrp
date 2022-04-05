@@ -529,7 +529,8 @@ class mrp{
     }
 
     planOrders(tableName){
-        // this.updateAfter(tableName, "1-5", "0")
+        this.updateAfter(tableName, "1-5", "0")
+        this.updateAfter(tableName, "1-6", "0")
         this.checkAfter2(tableName, "1-4","1", "5")
         
     }
