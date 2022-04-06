@@ -616,7 +616,7 @@ class mrp{
     getProductionDict(productionTime, tableId) {
         var table = this.tables[tableId]
         if (tableId == "GHP") { return this.getNotEmptyCellsFromRow(table, 2, productionTime)
-        } else {return this.getNotEmptyCellsFromRow(table, 5, productionTime)}
+        } else {return this.getNotEmptyCellsFromRow(table, 6, productionTime)}
     }
 
     getNotEmptyCellsFromRow(table, rowId, productionTime) {
