@@ -11,6 +11,9 @@ Projekt zostanie wykonany w technologiach webowych (HTML CSS JAVASCRIPT)
 Wstępnym źródłem informacji dla algorytmu MRP jest GHP (Główny Harmonogram Produkcji), struktura produktu oraz stan zapasów
 Całkowite zapotrzebowanie pochodzi z GHP.
 
+![diagram drawio](https://user-images.githubusercontent.com/38815170/161923911-6de0c371-a428-4ecb-bb66-5f1bff18940a.png)
+
+
 Struktura karmnika jest podzielona na dwie główne części, podstawę i górną część.
 
 W skład podstawy wchodzą elementy, takie jak: filary (utrzymujące dach karmnika), noga (część, na której stoi cały karmnik) i podłoga (będąca podstawą karmnika, na której siadać będą ptaki).
@@ -116,28 +119,3 @@ Przykładowe przejście przez proces zostało zobrazowane na poniższych tabelac
 |**Czas realizacji = 1  Wielkość partii = 500  Poziom BOM = 2  Na stanie = 0**||||||
 
 
-# finished:
-- Documentation: Create documentation / also incorporate existing data <- Vova, Karol, Piotrek, Kinga
-- Functionality: create initial page for input <- Kinga
-- Visual: take care of styles, also add classes to the elements <- Piotrek
-- Functionality: function to access data in cell content, also to render changes on html element at the same time <- Karol, Piotrek
-- Functionality: use input data to fill table <- Karol, Piotrek, Kinga, Vova
-- Functionality: Initial GHP calculations <- Karol, Vova, Piotrek, Kinga
-- Future functionality: Initial algorithm <- Split into side tasks
-
-# tasks:
-- Functionality: create a way to trigger GHP render by a button
-- Functionality: create a button to clear row of inputs
-- Visual: stylize inputs etc
-- Functionality: Create logic to move data from ghp to other tables
-
-# Continuous:
-- Visual: Constant Improvements to the visuals of the page
-
-# future:
-
-- Functionality: move from hardcodes to variables
-- Cleanup: remove unnecessary console logs
-
-# unnecesarry:
-- optimization
