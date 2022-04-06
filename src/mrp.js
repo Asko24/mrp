@@ -408,19 +408,20 @@ class mrp{
         var table = this.tables[tableName]
         this.updateProductionInTable(tableName, parentTableName)
         this.updateAvailabilityInTable(table)
-        this.updateNetDemand(table, "1")
+        this.updateNetDemand(tableName, "1")
         this.planOrders(tableName)
         this.updateOrderRecieve(tableName, table)
     }  
     
-    updateNetDemand(table, week) {
-        this.updateAfter(table.name, week+"-4", "0")
+    updateNetDemand(tableName, week) {
+        this.updateAfter(tableName, week+"-4", "0")
         
         for (var i = 1; i<this.xBlocks; i++){
-            var inStock = this.gcv(table.name, i+"-3")
+            var inStock = this.gcv(tableName, i+"-3")
             if( inStock < 0) {
-                this.gc(table.name, i+"-4")
+                this.gc(tableName, i+"-4")
                 this.write(inStock * (-1))
+                // this.updateAvailabilityAfter(tableName, i)
                 }
         }
     }
@@ -435,7 +436,7 @@ class mrp{
             if (value != 0) {
                 this.gc(table.name, i + productionTime +"-6")
                 this.write(value)
-                this.updateNetDemand(table, i + productionTime + 1)
+                this.updateNetDemand(table.name, i + productionTime + 1)
 
             }
         }
@@ -461,6 +462,31 @@ class mrp{
             
             if (this.gcv(table.name, i+"-2") !== "" && this.gcv(table.name, i+"-2") !== "0" && this.gcv(table.name, i+"-2") !== 0 ) {
                 this.write(previousCellValue - demand + parseInt(this.gcv(table.name, i+"-2")))
+            } else {
+                this.write(previousCellValue - demand)
+            }
+            
+        }
+    }
+
+    updateAvailabilityAfter(tableName, week) {
+        this.updateAfter(tableName, week+1 + "-3", "0")
+        this.updateAfter(tableName, week+1 + "-4", "0")
+        
+        this.gc(tableName,  week+"-3")
+        if (this.gcv(tableName, "1-2") == "" || this.gcv(tableName, "1-2") == "0" || this.gcv(tableName, "1-2") == 0 ) {
+            this.write(this.read() + this.getProductionSize(tableName) + parseInt(this.gcv(tableName, "1-1")))
+        } else {
+            this.write(this.read() + this.getProductionSize(tableName))
+        }
+        
+        for (var i = week+1; i<this.xBlocks; i++){
+            this.gc(tableName,  i+"-3")
+            var demand = parseInt(this.gcv(tableName, i+"-1"))
+            var previousCellValue = parseInt(this.gcv(tableName, (i-1)+"-3"))
+            
+            if (this.gcv(tableName, i+"-2") !== "" && this.gcv(tableName, i+"-2") !== "0" && this.gcv(tableName, i+"-2") !== 0 ) {
+                this.write(previousCellValue - demand + parseInt(this.gcv(tableName, i+"-2")))
             } else {
                 this.write(previousCellValue - demand)
             }
@@ -518,7 +544,17 @@ class mrp{
     planOrders(tableName){
         this.updateAfter(tableName, "1-5", "0")
         this.updateAfter(tableName, "1-6", "0")
-        this.checkAfter2(tableName, "1-4","1", "5")
+        for (var i = 1; i<this.xBlocks; i++){
+            var netDemand = parseInt(this.gcv(tableName, i+"-4"))
+            if(netDemand > 0){
+                this.gc(tableName, i - this.getProductionTime(tableName)+"-5")
+                this.write(this.getProductionSize(tableName))
+                this.updateAvailabilityAfter(tableName, i)
+                this.updateNetDemand(tableName, i+1)
+            }
+        }
+
+        // this.checkAfter2(tableName, "1-4","1", "5")
         
     }
 
