@@ -56,19 +56,19 @@ class mrp{
 
         this.currentCell = this.GHPTable.content["1-1"]
         // console.log("",this.GHPTable)
-        var renderButton = addElement(this.GHPTable.table, "button")
-        renderButton.innerText = "Odśwież"
-        // console.log("button",this)
-        var thisInstance = this
-        //renderButton.mrpOf = this
-        //renderButton.setAttribute("mrp", this)
-        renderButton.addEventListener("click", function(eventState, classInstance = thisInstance){
-            // console.log("here")
-            // console.log(this)
-            // console.log(eventState)
-            // console.log(classInstance)
-            classInstance.loop()
-        })
+        // var renderButton = addElement(this.GHPTable.table, "button")
+        // renderButton.innerText = "Odśwież"
+        // // console.log("button",this)
+        // var thisInstance = this
+        // //renderButton.mrpOf = this
+        // //renderButton.setAttribute("mrp", this)
+        // renderButton.addEventListener("click", function(eventState, classInstance = thisInstance){
+        //     // console.log("here")
+        //     // console.log(this)
+        //     // console.log(eventState)
+        //     // console.log(classInstance)
+        //     classInstance.loop()
+        // })
         
         this.updateAfter("GHP", "1-1","0")
         this.updateAfter("GHP", "1-3",this.na_stanie)
